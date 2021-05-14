@@ -9,9 +9,11 @@ import numpy as np
 import os
 import configuration
 from wandb_log import log
+from dataloader import FloorPlan
+from unet import UNet
 
 def wandb_initializer(args):
-    with wandb.init(project="DeepFloorPlan_Recognition",config=args):
+    with wandb.init(project="Deepfloorplan_Recognition",config=args):
         config = wandb.config
 
         model,train_loader,val_loader,loss_func,optimizer = nn_model(config)
@@ -29,7 +31,7 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = 
+    net = UNet(in_channels=1,out_channels=2)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
