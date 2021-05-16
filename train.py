@@ -9,7 +9,7 @@ import numpy as np
 import os
 import configuration
 from wandb_log import log
-from dataloader import FloorPlan
+from dataloader import FloorPlanDataset
 from unet import UNet
 
 def wandb_initializer(args):
@@ -23,8 +23,8 @@ def wandb_initializer(args):
 def nn_model(config):
     data_transformers = transforms.Compose([transforms.ToTensor()])
 
-    train_set = 
-    val_set = 
+    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,door_dir=configuration.train_data_config. doors_training_ground_truth_dir,window_dir=configuration.train_data_config.windows_training_ground_truth_dir,data_transformers)
+    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,door_dir=configuration.validation_data_config. doors_validation_ground_truth_dir,window_dir=configuration.validation_data_config.windows_validation_ground_truth_dir,data_transformers)
 
     #Loading train and val set
     train_set_loader = DataLoader(train_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
@@ -36,7 +36,7 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = 
+    loss_function = torch.nn.CrossEntropyLoss(ignore_index=-1,reduction='mean')
 
     optimizer = torch.optim.Adam(net.parmeters(),lr=config.lr)
 
@@ -49,14 +49,16 @@ def validation(nn_model,val_set_loader,loss_function):
 
     val_loss = 0.0
 
-    for batch_id,.. in enumerate(val_set_loader):
+    for batch_id,(image,door,window) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
+            image,door,window = image.cuda(), door.cuda(), window.cuda()
+        else:
+            image,door,window = image, door, window
 
 
-        
-
-        output = nn_model(...)
-        loss = loss_function(...)
+        output = nn_model(image.float())
+        loss_door = loss_func(output[0].float(), door.float())
+        loss_window = loss_func(output[1].float(),window.float())
 
         mini_batches += 1
         val_loss += float(loss)
@@ -67,19 +69,22 @@ def validation(nn_model,val_set_loader,loss_function):
 
 
 def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
-    wandb.watch(nn_model,loss_function,log='all',log_freq=50)
+    wandb.watch(nn_model,loss_func,log='all',log_freq=50)
 
     mini_batches = 0
     train_loss = 0.0
 
     for epoch in range(config.epochs):
-        for batch_id,... in enumerate(train_set_loader):
+        for batch_id,(image,door,window) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
+                image,door,window = image.cuda(), door.cuda(), window.cuda()
+            else:
+                image,door,window = image, door, window
 
-
-            output = nn_model(...)
-            loss = loss_func(...)
+            output = nn_model(image.float())
+            loss_door = loss_func(output[0].float(), door.float())
+            loss_window = loss_func(output[1].float(),window.float())
             
             optimizer.zero_grad()
             loss.backward()
