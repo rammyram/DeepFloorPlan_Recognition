@@ -53,10 +53,20 @@ class UNet(nn.Module):
             concat_skip = torch.cat((skip_connection,x),dim=1)
             x = self.ups[idx + 1](concat_skip)
             
-        return self.final_conv(x)    
+        return self.final_conv(x)
 
+def test():
+    x = torch.randn((3,1,160,160))
+    model = UNet(in_channels=1,out_channels=1)
+    preds = model(x)
+    print(preds.shape)
+    print(x.shape)
+    assert(preds.shape == x.shape)
+
+test()    
+"""
 if __name__ == '__main__':
     net = UNet(in_channels=1,out_channels=1)
-    summary(net,(1,161,161))
+    summary(net,(3,583,786))
     
-  
+"""  
