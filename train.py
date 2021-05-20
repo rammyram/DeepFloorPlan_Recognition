@@ -37,7 +37,7 @@ def nn_model(config):
 
     loss_function = torch.nn.CrossEntropyLoss(ignore_index=-1,reduction='mean')
 
-    optimizer = torch.optim.Adam(net.parmeters(),lr=config.lr)
+    optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
 
     return net,train_set_loader,val_set_loader,loss_function,optimizer
 
