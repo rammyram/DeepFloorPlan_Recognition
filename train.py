@@ -107,3 +107,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 train_loss = 0.0
 
             print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
+
+def training_log(loss,mini_batch,train=True):
+    if train == True:
+        wandb.log({'batch':mini_batch,'loss':loss})
+    else:
+        wandb.log({'batch':mini_batch,'loss':loss})
