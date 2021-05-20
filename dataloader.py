@@ -18,7 +18,7 @@ class FloorPlanDataset(Dataset):
     def __getitem__(self, index):
         image_path = os.path.join(self.image_dir,self.images[index])
         door_path = os.path.join(self.door_dir,self.images[index].replace('.jpg','_doors.png'))
-        window_path = os,path.join(self.window_dir,self.images[index].replace('.jpg','_windows.png'))
+        window_path = os.path.join(self.window_dir,self.images[index].replace('.jpg','_windows.png'))
 
         image = np.array(Image.open(image_path).convert("RGB"))
         doors = np.array(Image.open(door_path).convert("L"),dtype=np.float32)
