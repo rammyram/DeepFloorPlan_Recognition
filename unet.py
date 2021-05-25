@@ -54,7 +54,7 @@ class UNet(nn.Module):
             x = self.ups[idx + 1](concat_skip)
             
         return self.final_conv(x)
-
+"""
 def test():
     x = torch.randn((3,1,160,160))
     model = UNet(in_channels=1,out_channels=1)
@@ -64,7 +64,7 @@ def test():
     assert(preds.shape == x.shape)
 
 test()    
-"""
+
 if __name__ == '__main__':
     net = UNet(in_channels=1,out_channels=1)
     summary(net,(3,583,786))
