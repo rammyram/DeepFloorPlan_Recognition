@@ -57,6 +57,6 @@ class UNet(nn.Module):
    
 
 if __name__ == '__main__':
-    net = UNet(in_channels=1,out_channels=1)
+    net = UNet(in_channels=1,out_channels=2)
     summary(net,(1,600,600))
   
