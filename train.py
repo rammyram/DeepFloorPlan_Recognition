@@ -72,7 +72,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
 
     mini_batches = 0
     train_loss = 0.0
-
+    print("Training....")
     for epoch in range(config.epochs):
         for batch_id,(image,door,window) in enumerate(train_set_loader):
             nn_model.train()
