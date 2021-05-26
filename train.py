@@ -22,8 +22,8 @@ def wandb_initializer(args):
 def nn_model(config):
     data_transformers = transforms.Compose([transforms.ToTensor()])
 
-    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,door_dir=configuration.train_data_config. doors_training_ground_truth_dir,window_dir=configuration.train_data_config.windows_training_ground_truth_dir,transform = data_transformers)
-    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,door_dir=configuration.validation_data_config. doors_validation_ground_truth_dir,window_dir=configuration.validation_data_config.windows_validation_ground_truth_dir,transform = data_transformers)
+    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,door_dir=configuration.train_data_config. doors_training_ground_truth_dir,window_dir=configuration.train_data_config.windows_training_ground_truth_dir)
+    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,door_dir=configuration.validation_data_config. doors_validation_ground_truth_dir,window_dir=configuration.validation_data_config.windows_validation_ground_truth_dir)
 
     #Loading train and val set
     train_set_loader = DataLoader(train_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
