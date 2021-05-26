@@ -20,15 +20,15 @@ class FloorPlanDataset(Dataset):
         door_path = os.path.join(self.door_dir,self.images[index].replace('.jpg','_doors.png'))
         window_path = os.path.join(self.window_dir,self.images[index].replace('.jpg','_windows.png'))
 
-        image = Image.open(image_path)
+        image = Image.open(image_path).convert('L')
         image = image.resize((600,600),Image.ANTIALIAS)
         image = np.array(image,dtype=np.float32)
         
-        doors = Image.open(door_path)
+        doors = Image.open(door_path).convert('L')
         doors = doors.resize((600,600),Image.ANTIALIAS)
         doors = np.array(doors,dtype=np.float32)
         
-        windows = Image.open(window_path)
+        windows = Image.open(window_path).convert('L')
         windows = windows.resize((600,600),Image.ANTIALIAS)
         windows = np.array(windows,dtype=np.float32)
         
