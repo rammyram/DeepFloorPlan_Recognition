@@ -20,7 +20,7 @@ def wandb_initializer(args):
     return model
 
 def nn_model(config):
-    data_transformers = transforms.Compose([transforms.Resize(600)])
+    data_transformers = transforms.Compose([transforms.ToTensor()])
 
     train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,door_dir=configuration.train_data_config. doors_training_ground_truth_dir,window_dir=configuration.train_data_config.windows_training_ground_truth_dir,transform=data_transformers)
     val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,door_dir=configuration.validation_data_config. doors_validation_ground_truth_dir,window_dir=configuration.validation_data_config.windows_validation_ground_truth_dir,transform=data_transformers)
@@ -30,7 +30,7 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(in_channels=3,out_channels=2)
+    net = UNet(in_channels=1,out_channels=2)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
