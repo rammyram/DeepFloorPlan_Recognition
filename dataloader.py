@@ -35,10 +35,10 @@ class FloorPlanDataset(Dataset):
 
         #doors[doors == 255.0] = 1.0
         #windows[windows == 255.0] = 1.0
-
+        
         if self.transform is not None:
             image = torch.tensor([image])
             doors = torch.tensor([doors])
             windows = torch.tensor([windows])
-
+        
         return image, doors, windows
