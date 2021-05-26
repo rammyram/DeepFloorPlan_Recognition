@@ -9,7 +9,7 @@ Please install the modules given in the requirements.txt file.
 # How to run?
 1. Install packages via pip and requirements.txt
 
- ## pip install -r requirements.txt
+ ### pip install -r requirements.txt
 
 2. Change the training hyperparameters if required in configuration.py file.
 3. Run main.py file to initiate the training.
