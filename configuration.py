@@ -9,14 +9,14 @@ class training_config():
     plot_frequency = 1
 
 class train_data_config():
-    training_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_train/"
-    doors_training_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/doors_train/"
-    windows_training_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/windows_train/"
+    training_set_dir = "/app/DeepFloorplan_Recognition/Data/Images_train/"
+    doors_training_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/doors_train/"
+    windows_training_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/windows_train/"
     training_data_size = 146
 
 class validation_data_config():
-    validation_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_val/"
-    doors_validation_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/doors_val/"
-    windows_validation_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/windows_val/"
+    validation_set_dir = "/app/DeepFloorplan_Recognition/Data/Images_val/"
+    doors_validation_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/doors_val/"
+    windows_validation_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/windows_val/"
     validation_data_size = 27
 
