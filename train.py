@@ -84,6 +84,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             output = nn_model(image.float())
             print("Shape of the output:",output.shape)
             print("Shape of door:",door.shape)
+            print("Shape of window:",window.shape)
             loss_door = loss_func(output[0].float(), door.float())
             loss_window = loss_func(output[1].float(),window.float())
             
