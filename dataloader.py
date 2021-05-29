@@ -5,10 +5,10 @@ import os
 import torch
 
 class FloorPlanDataset(Dataset):
-    def __init__(self,image_dir,door_dir,window_dir,transform=None):
+    def __init__(self,image_dir,door_dir,transform=None):
         self.image_dir = image_dir
         self.door_dir = door_dir
-        self.window_dir = window_dir
+        #self.window_dir = window_dir
         self.transform = transform
         self.images = os.listdir(image_dir)
 
@@ -18,7 +18,7 @@ class FloorPlanDataset(Dataset):
     def __getitem__(self, index):
         image_path = os.path.join(self.image_dir,self.images[index])
         door_path = os.path.join(self.door_dir,self.images[index].replace('.jpg','_doors.png'))
-        window_path = os.path.join(self.window_dir,self.images[index].replace('.jpg','_windows.png'))
+        #window_path = os.path.join(self.window_dir,self.images[index].replace('.jpg','_windows.png'))
 
         image = Image.open(image_path).convert('L')
         image = image.resize((600,600),Image.ANTIALIAS)
