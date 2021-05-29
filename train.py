@@ -55,11 +55,10 @@ def validation(nn_model,val_set_loader,loss_function):
         else:
             image,door = image, door
 
-        print("data type of output:",type(output))
-        print("data type of door:",type(door))
-        output = nn_model(image.float())
         
-        loss_door = loss_function(output.float(), door.float())
+        output = nn_model(image)
+        
+        loss_door = loss_function(output, door)
         #loss_window = loss_func(output[1].float(),window.float())
 
         mini_batches += 1
@@ -83,7 +82,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 image,door = image.cuda(), door.cuda()
             else:
                 image,door = image, door
-
+            print("Data type of output:",type(output))
+            print("Data type of door:",type(door))
             output = nn_model(image.float())
             loss_door = loss_func(output.float(), door.float())
             #loss_window = loss_func(output[1].float(),window.float())
