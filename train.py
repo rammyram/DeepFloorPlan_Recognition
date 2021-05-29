@@ -82,7 +82,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 image,door = image.cuda(), door.cuda()
             else:
                 image,door = image, door
-            print("Data type of output:",type(output))
+            print("Data type of output:",type(image))
             print("Data type of door:",type(door))
             output = nn_model(image.float())
             loss_door = loss_func(output.float(), door.float())
