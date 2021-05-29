@@ -50,9 +50,9 @@ def validation(nn_model,val_set_loader,loss_function):
 
     for batch_id,(image,door,window) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
-            image,door,window = image.cuda(), door.cuda(), window.cuda()
+            image,door = image.cuda(), door.cuda()
         else:
-            image,door,window = image, door, window
+            image,door = image, door
 
 
         output = nn_model(image.float())
@@ -77,14 +77,13 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
         for batch_id,(image,door,window) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,door,window = image.cuda(), door.cuda(), window.cuda()
+                image,door = image.cuda(), door.cuda()
             else:
-                image,door,window = image, door, window
+                image,door = image, door
 
             output = nn_model(image.float())
-            print(output[0].shape)
             loss_door = loss_func(output[0].float(), door.float())
-            loss_window = loss_func(output[1].float(),window.float())
+            #loss_window = loss_func(output[1].float(),window.float())
             
             
             optimizer.zero_grad()
