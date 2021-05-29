@@ -28,9 +28,9 @@ class FloorPlanDataset(Dataset):
         doors = doors.resize((600,600),Image.ANTIALIAS)
         doors = np.array(doors,dtype=np.float32)
         
-        windows = Image.open(window_path).convert('L')
-        windows = windows.resize((600,600),Image.ANTIALIAS)
-        windows = np.array(windows,dtype=np.float32)
+        #windows = Image.open(window_path).convert('L')
+        #windows = windows.resize((600,600),Image.ANTIALIAS)
+        #windows = np.array(windows,dtype=np.float32)
         
 
         #doors[doors == 255.0] = 1.0
@@ -39,6 +39,6 @@ class FloorPlanDataset(Dataset):
         if self.transform is not None:
             image = torch.tensor([image])
             doors = torch.tensor([doors])
-            windows = torch.tensor([windows])
+            #windows = torch.tensor([windows])
         
-        return image, doors, windows
+        return image, doors
