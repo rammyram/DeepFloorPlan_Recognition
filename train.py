@@ -47,8 +47,9 @@ def validation(nn_model,val_set_loader,loss_function):
     nn_model.eval()
 
     val_loss = 0.0
+    mini_batches = 0
 
-    for batch_id,(image,door,window) in enumerate(val_set_loader):
+    for batch_id,(image,door) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
             image,door = image.cuda(), door.cuda()
         else:
@@ -56,11 +57,11 @@ def validation(nn_model,val_set_loader,loss_function):
 
 
         output = nn_model(image.float())
-        loss_door = loss_func(output.float(), door.float())
+        loss_door = loss_function(output.float(), door.float())
         #loss_window = loss_func(output[1].float(),window.float())
 
         mini_batches += 1
-        val_loss += float(loss)
+        val_loss += float(loss_door)
 
         val_loss = val_loss/mini_batches
 
@@ -74,7 +75,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        for batch_id,(image,door,window) in enumerate(train_set_loader):
+        for batch_id,(image,door) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,door = image.cuda(), door.cuda()
@@ -87,18 +88,18 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             
             
             optimizer.zero_grad()
-            loss.backward()
+            loss_door.backward()
             optimizer.step()
 
             mini_batches += 1
-            train_loss += float(loss)
+            train_loss += float(loss_door)
 
 
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
                 val_loss = validation(nn_model,val_set_loader,loss_func)
-                log(val_loss,mini_batches)
-                log(train_loss,mini_batches,False)
+                training_log(val_loss,mini_batches)
+                training_log(train_loss,mini_batches,False)
 
                 PATH = "model.pt"
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
