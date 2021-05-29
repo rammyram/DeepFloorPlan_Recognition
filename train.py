@@ -30,7 +30,7 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(in_channels=1,out_channels=2)
+    net = UNet(in_channels=1,out_channels=1)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
@@ -82,7 +82,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 image,door = image, door
 
             output = nn_model(image.float())
-            loss_door = loss_func(output[0].float(), door.float())
+            loss_door = loss_func(output.float(), door.float())
             #loss_window = loss_func(output[1].float(),window.float())
             
             
