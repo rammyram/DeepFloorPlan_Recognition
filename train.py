@@ -57,7 +57,7 @@ def validation(nn_model,val_set_loader,loss_function):
 
         
         output = nn_model(image)
-        
+        print(type(output))
         loss_door = loss_function(output, door)
         #loss_window = loss_func(output[1].float(),window.float())
 
