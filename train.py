@@ -35,7 +35,7 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.CrossEntropyLoss(ignore_index=-1,reduction='mean')
+    loss_function = torch.nn.MSELoss()
 
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
 
