@@ -3,14 +3,6 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 import os
-"""
-img_src = Image.load(imag1)
-img_dest = Image.open("/home/aditya/Desktop/R3D_doors and windows/Train/windows/windows_train/2_windows.png").convert("L")
-#img_dest.show()
-#img_src.show()
-#new_img = Image.blend(img_src,img_dest,0.5)
-#new_img.show()
-"""
 
 def resize_images(source_dir1):
     path, dirs, files = next(os.walk(source_dir1))
@@ -53,9 +45,6 @@ def merge_images(source_dir1, source_dir2):
 
     
     for i in range(len(file_1)):
-        
-        #print(source_dir1 + str(file_1[i]) + "_doors.png")
-        #print(source_dir2 + str(file_1[i]) + "_windows.png")
         src_img = cv2.imread(source_dir1 + str(file_1[i]) + "_doors.png")
         dest_img = cv2.imread(source_dir2 + str(file_2[i]) + "_windows.png")
 
