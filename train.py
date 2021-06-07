@@ -23,8 +23,8 @@ def wandb_initializer(args):
 def nn_model(config):
     data_transformers = transforms.Compose([transforms.ToTensor()])
 
-    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,door_dir=configuration.train_data_config. doors_training_ground_truth_dir,transform=data_transformers)
-    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,door_dir=configuration.validation_data_config. doors_validation_ground_truth_dir,transform=data_transformers)
+    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,gt_dir=configuration.train_data_config.train_ground_truth_dir,transform=data_transformers)
+    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,gt_dir=configuration.validation_data_config.validation_ground_truth_dir,transform=data_transformers)
 
     #Loading train and val set
     train_set_loader = DataLoader(train_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
@@ -51,19 +51,19 @@ def validation(nn_model,val_set_loader,loss_function):
     val_loss = 0.0
     mini_batches = 0
 
-    for batch_id,(image,door) in enumerate(val_set_loader):
+    for batch_id,(image,gt) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
-            image,door = image.cuda(), door.cuda()
+            image,gt = image.cuda(), gt.cuda()
         else:
-            image,door = image, door
+            image,gt = image, gt
 
         
         output = nn_model(image)
-        loss_door = loss_function(output, door)
+        loss = loss_function(output, gt)
         #loss_window = loss_func(output[1].float(),window.float())
 
         mini_batches += 1
-        val_loss += float(loss_door)
+        val_loss += float(loss)
 
         val_loss = val_loss/mini_batches
 
@@ -77,25 +77,25 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        for batch_id,(image,door) in enumerate(train_set_loader):
+        for batch_id,(image,gt) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,door = image.cuda(), door.cuda()
+                image,gt = image.cuda(), gt.cuda()
             else:
-                image,door = image, door
+                image,gt = image, gt
             
             output = nn_model(image)
             
-            loss_door = loss_func(output, door)
+            loss = loss_func(output, gt)
             #loss_window = loss_func(output[1].float(),window.float())
             
             
             optimizer.zero_grad()
-            loss_door.backward()
+            loss.backward()
             optimizer.step()
 
             mini_batches += 1
-            train_loss += float(loss_door)
+            train_loss += float(loss)
 
 
             #Plotting in wandb
