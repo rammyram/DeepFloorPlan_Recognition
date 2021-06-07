@@ -10,6 +10,7 @@ import os
 import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
+from pytorch_toolbelt import losses as L
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -35,7 +36,8 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.MSELoss()
+    #loss_function = torch.nn.MSELoss()
+    loss_function = L.DiceLoss(mode="binary",classes=2)
 
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
 
