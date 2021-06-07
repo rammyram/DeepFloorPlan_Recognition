@@ -77,8 +77,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        print(torch.size(image))
-        print(torch.size(gt))
+        print(torch.shape(image))
+        print(torch.shape(gt))
         for batch_id,(image,gt) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
