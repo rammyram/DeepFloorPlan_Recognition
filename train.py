@@ -37,7 +37,7 @@ def nn_model(config):
         net.cuda()
 
     #loss_function = torch.nn.MSELoss()
-    loss_function = L.DiceLoss(mode="binary",classes=2)
+    loss_function = L.DiceLoss(mode="multiclass",classes=2)
 
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
 
