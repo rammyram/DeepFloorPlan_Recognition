@@ -10,7 +10,7 @@ def resize_images(source_dir1):
     for i in range(len(files)):
         image = Image.open(source_dir1 + files[i]).convert("L")
         image = image.resize((600,600),Image.ANTIALIAS)
-        image.save("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/windows/windows_train_new/" + files[i])
+        image.save("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/windows/windows_val_new/" + files[i])
 
 def change_mask_color(source_dir,destination_dir):
     path, dirs, files = next(os.walk(source_dir))
@@ -52,12 +52,20 @@ def merge_images(source_dir1, source_dir2):
         dest_img = Image.fromarray(dest_img)
 
         new_img = Image.blend(src_img,dest_img,0.5)
-        new_img.save("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/new_train/" + str(file_1[i]) + ".png")
-        
+        new_img.save("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/new_val/" + str(file_1[i]) + ".png")
 
-src_dir1 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_train_new_color/"
-src_dir2 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/windows/windows_train_new/"
-#destination_dir = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_train_new_color/"
+"""
+src_image = cv2.imread("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Images/Images_train/2.jpg")
+src_image = Image.fromarray(src_image)
+destination_image = cv2.imread("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/new_train/2.png")
+destination_image = Image.fromarray(destination_image)
+new_image = Image.blend(src_image,destination_image,0.5)
+new_image.show()
+"""     
+
+src_dir1 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_val_color/"
+src_dir2 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/windows/windows_val_new/"
+#destination_dir = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_val_color/"
 merge_images(src_dir1,src_dir2)
 #resize_images(src_dir2)
 #change_mask_color(src_dir1,destination_dir)
