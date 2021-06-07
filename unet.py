@@ -13,8 +13,9 @@ class DoubleConv(nn.Module):
 
     
 class UNet(nn.Module):
-    def __init__(self,in_channels=1,out_channels=1,features=[64,128,256]):
+    def __init__(self,n_classes,in_channels=1,features=[64,128,256]):
         super(UNet,self).__init__()
+        self.n_classes = n_classes
         self.ups = nn.ModuleList()
         self.downs = nn.ModuleList()
         self.pool = nn.MaxPool2d(kernel_size=2,stride=2)
@@ -30,13 +31,12 @@ class UNet(nn.Module):
             self.ups.append(DoubleConv(feature * 2,feature))
 
         self.bottleneck = DoubleConv(features[-1],features[-1] * 2)
-        self.final_conv = nn.Conv2d(features[0],out_channels,kernel_size=1)
+        self.final_conv = nn.Conv2d(features[0],n_classes,kernel_size=1)
 
     def forward(self,x):
         skip_connections = []
         
         for down in self.downs:
-            print(x.shape)
             x = down(x)
             skip_connections.append(x)
             x = self.pool(x)
@@ -59,6 +59,6 @@ class UNet(nn.Module):
    
 
 if __name__ == '__main__':
-    net = UNet(in_channels=1,out_channels=2)
+    net = UNet(n_classes=3)
     summary(net,(1,600,600))
   
