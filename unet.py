@@ -32,7 +32,7 @@ class UNet(nn.Module):
 
         self.bottleneck = DoubleConv(features[-1],features[-1] * 2)
         self.final_conv = nn.Conv2d(features[0],n_classes,kernel_size=1)
-        self.conv = nn.Sequential(nn.Conv2d(in_channels=in_channels,out_channels=in_channels,kernel_size=3,stride=1,padding=1,bias=False),nn.BatchNorm2d(in_channels),nn.ReLU())
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self,x):
         skip_connections = []
@@ -58,7 +58,7 @@ class UNet(nn.Module):
             concat_skip = torch.cat((skip_connection,x),dim=1)
             x = self.ups[idx + 1](concat_skip)
             
-        return self.final_conv(x)
+        return self.sigmoid(self.final_conv(x))
    
 """
 if __name__ == '__main__':
