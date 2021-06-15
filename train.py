@@ -10,7 +10,7 @@ import os
 import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
-from pytorch_toolbelt import losses as L
+#from pytorch_toolbelt import losses as L
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
