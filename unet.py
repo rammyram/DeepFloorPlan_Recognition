@@ -70,4 +70,8 @@ class UNet(nn.Module):
 
 if __name__ == '__main__':
     net = UNet(n_classes=3)
-    summary(net,(3,600,600))
+
+    if torch.cuda.device_count() > 0:
+        summary(net.cuda(), (3,600,600))
+    else:
+        summary(net, (3,600,600))
