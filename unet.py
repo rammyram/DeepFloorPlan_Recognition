@@ -65,8 +65,7 @@ class UNet(nn.Module):
             
         return self.softmax(self.final_conv(x))
    
-"""
+
 if __name__ == '__main__':
     net = UNet(n_classes=3)
-    summary(net,(1,600,600))
-"""
+    summary(net,(3,600,600))
