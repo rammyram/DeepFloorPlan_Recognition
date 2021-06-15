@@ -34,11 +34,17 @@ class UNet(nn.Module):
         self.final_conv = nn.Conv2d(features[0],n_classes,kernel_size=1)
         self.softmax = nn.Softmax()
 
+        for m in self.modules():
+            if isinstance(m, nn.Conv3d):
+                nn.init.kaiming_normal_(m.weight,mode='fan_out',nonlinearity='relu')
+            elif isinstance(m, nn.BatchNorm3d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+
     def forward(self,x):
         skip_connections = []
-        #x = self.conv(x)
+        
         for down in self.downs:
-            #print(x.shape)
             x = down(x)
             skip_connections.append(x)
             x = self.pool(x)
@@ -48,7 +54,6 @@ class UNet(nn.Module):
         skip_connections = skip_connections[::-1]
 
         for idx in range(0,len(self.ups),2):
-            #print(x.shape)
             x = self.ups[idx](x)
             skip_connection = skip_connections[idx//2]
 
