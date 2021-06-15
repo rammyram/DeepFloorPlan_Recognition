@@ -25,12 +25,11 @@ class FloorPlanDataset(Dataset):
         
         gt = Image.open(gt_path)
         gt = np.array(gt,dtype=np.float32)
-        
-        
 
-        #doors[doors == 255.0] = 1.0
-        #windows[windows == 255.0] = 1.0
-        
+        gt[np.all(gt == (0,0,0),axis=-1)] = 0
+        gt[np.all(gt == (0,0,127),axis=-1)] = 1
+        gt[np.all(gt == (127,127,127),axis=-1)] = 2
+               
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
