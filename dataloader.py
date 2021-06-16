@@ -15,6 +15,7 @@ class FloorPlanDataset(Dataset):
         return(len(self.images))
 
     def __getitem__(self, index):
+        print(index)
         image_path = os.path.join(self.image_dir,self.images[index])
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg",".png")
@@ -26,9 +27,9 @@ class FloorPlanDataset(Dataset):
         gt = Image.open(gt_path)
         gt = np.array(gt,dtype=np.float32)
 
-        gt[np.all(gt == (0,0,0),axis=-1)] = 0
-        gt[np.all(gt == (0,0,127),axis=-1)] = 1
-        gt[np.all(gt == (127,127,127),axis=-1)] = 2
+        gt[np.all(gt == (0,0,0),axis=-1)] = 0 #black background
+        gt[np.all(gt == (127,0,0),axis=-1)] = 1 #red
+        gt[np.all(gt == (127,127,127),axis=-1)] = 2 #white
                
         if self.transform is not None:
             image = torch.tensor([image])
