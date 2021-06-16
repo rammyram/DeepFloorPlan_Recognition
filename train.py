@@ -91,7 +91,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 image,gt = image, gt
             
             output = nn_model(image)
-            print(output,output.shape)
+            #print(output,output.shape)
             loss = loss_func(output, gt)
             #loss_window = loss_func(output[1].float(),window.float())
             
