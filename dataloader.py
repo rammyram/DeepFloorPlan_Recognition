@@ -15,8 +15,8 @@ class FloorPlanDataset(Dataset):
         return(len(self.images))
 
     def __getitem__(self, index):
-        print(index)
         image_path = os.path.join(self.image_dir,self.images[index])
+        print(image_path)
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg",".png")
 
