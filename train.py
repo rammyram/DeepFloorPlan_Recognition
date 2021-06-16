@@ -79,6 +79,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
     for epoch in range(config.epochs):
         
         for batch_id,(image,gt) in enumerate(train_set_loader):
+            print(batch_id)
             image = image.squeeze(1)
             image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
             gt = gt.squeeze(1)
