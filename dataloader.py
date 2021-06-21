@@ -35,5 +35,5 @@ class FloorPlanDataset(Dataset):
             image = torch.tensor([image])
             gt = torch.tensor([gt])
             
-        
+        print(image.shape,gt.shape)
         return image, gt
