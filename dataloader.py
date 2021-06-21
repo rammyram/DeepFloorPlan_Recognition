@@ -24,7 +24,7 @@ class FloorPlanDataset(Dataset):
         image = Image.open(image_path)
         image = image.resize((600,600),Image.ANTIALIAS)
         image = np.array(image,dtype=np.float32)
-        print("check")
+        
         gt = Image.open(gt_path)
         gt = np.array(gt,dtype=np.float32)
 
@@ -35,6 +35,6 @@ class FloorPlanDataset(Dataset):
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
-            
+        print("check") 
         print(image.shape,gt.shape)
         return image, gt
