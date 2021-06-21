@@ -60,7 +60,7 @@ def validation(nn_model,val_set_loader,loss_function):
         
         output = nn_model(image)
         loss = loss_function(output, gt)
-        #loss_window = loss_func(output[1].float(),window.float())
+       
 
         mini_batches += 1
         val_loss += float(loss)
@@ -79,14 +79,12 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
     for epoch in range(config.epochs):
         
         for batch_id,(image,gt) in enumerate(train_set_loader):
-            print("Image shape before:",image.shape)
-            print("Ground truth shape befoe:",gt.shape)
+           
             image = image.squeeze(1)
             image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
             gt = gt.squeeze(1)
             gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
-            print("Image shape:",image.shape)
-            print("Ground truth shape:",gt.shape)
+           
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.cuda(), gt.cuda()
@@ -94,9 +92,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
                 image,gt = image, gt
             
             output = nn_model(image)
-            #print(output,output.shape)
             loss = loss_func(output, gt)
-            #loss_window = loss_func(output[1].float(),window.float())
             
             
             optimizer.zero_grad()
@@ -106,7 +102,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             mini_batches += 1
             train_loss += float(loss)
 
-
+            print("Epoch: " + str(epoch) + " : Mini Batch: " + str(mini_batches) + " Training loss: " + str(train_loss))
+            
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
                 val_loss = validation(nn_model,val_set_loader,loss_func)
