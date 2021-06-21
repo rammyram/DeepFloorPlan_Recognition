@@ -77,7 +77,7 @@ def validation(nn_model,val_set_loader,loss_function):
 
 
 def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
-    wandb.watch(nn_model,loss_func,log='all',log_freq=50)
+    wandb.watch(nn_model,loss_func,log='all',log_freq=1)
 
     mini_batches = 0
     train_loss = 0.0
@@ -91,7 +91,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             gt = gt.squeeze(1)
             gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
 
-            print(image.shape,gt.shape)
+            #print(image.shape,gt.shape)
 
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
