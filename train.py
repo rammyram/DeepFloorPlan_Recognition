@@ -45,7 +45,8 @@ def nn_model(config):
 
 
 def validation(nn_model,val_set_loader,loss_function):
-    print("Validating....")
+    print("Validating.....")
+    print("Validation set size: ",len(val_set_loader))
     nn_model.eval()
 
     val_loss = 0.0
@@ -66,7 +67,8 @@ def validation(nn_model,val_set_loader,loss_function):
         val_loss += float(loss)
 
         val_loss = val_loss/mini_batches
-
+        print("Validation loss: ",val_loss)
+        
         return val_loss
 
 
@@ -103,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             train_loss += float(loss)
 
             print("Epoch: " + str(epoch) + " : Mini Batch: " + str(mini_batches) + " Training loss: " + str(train_loss))
-            
+
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
                 val_loss = validation(nn_model,val_set_loader,loss_func)
