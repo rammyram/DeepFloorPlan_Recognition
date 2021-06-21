@@ -1,7 +1,7 @@
 import torch
 
 class training_config():
-    batch_size = 8
+    batch_size = 4
     number_epochs = 60
     learning_rate = 0.0001
     number_workers = 2
