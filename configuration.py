@@ -6,7 +6,7 @@ class training_config():
     learning_rate = 0.0001
     number_workers = 2
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    plot_frequency = 5
+    plot_frequency = 1
 
 class train_data_config():
     training_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_train/"
