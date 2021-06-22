@@ -40,7 +40,7 @@ def nn_model(config):
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
 
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2, last_epoch=-1)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
     return net,train_set_loader,val_set_loader,loss_function,optimizer,scheduler
 
