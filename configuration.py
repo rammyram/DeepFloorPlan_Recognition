@@ -9,12 +9,12 @@ class training_config():
     plot_frequency = 5
 
 class train_data_config():
-    training_set_dir = "/app/DeepFloorPlan_Recognition/Data/Images_train/"
-    train_ground_truth_dir = "/app/DeepFloorPlan_Recognition/Data/ground_truth_train/"
+    training_set_dir = "/app/DeepFloorplan_Recognition/Data/Images_train/"
+    train_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/ground_truth_train/"
     training_data_size = 40
 
 class validation_data_config():
-    validation_set_dir = "/app/DeepFloorPlan_Recognition/Data/Images_val/"
-    validation_ground_truth_dir = "/app/DeepFloorPlan_Recognition/Data/ground_truth_val/"
+    validation_set_dir = "/app/DeepFloorplan_Recognition/Data/Images_val/"
+    validation_ground_truth_dir = "/app/DeepFloorplan_Recognition/Data/ground_truth_val/"
     validation_data_size = 10
 
