@@ -11,7 +11,7 @@ class training_config():
 class train_data_config():
     training_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_train/"
     train_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/ground_truth_train/"
-    training_data_size = 60
+    training_data_size = 40
 
 class validation_data_config():
     validation_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_val/"
