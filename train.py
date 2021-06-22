@@ -46,7 +46,7 @@ def nn_model(config):
 
 def validation(nn_model,val_set_loader,loss_function):
     print("Validating.....")
-    print("Validation set size: ",len(val_set_loader))
+    
     nn_model.eval()
 
     val_loss = 0.0
@@ -77,7 +77,7 @@ def validation(nn_model,val_set_loader,loss_function):
 
 
 def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
-    wandb.watch(nn_model,loss_func,log='all',log_freq=1)
+    wandb.watch(nn_model,loss_func,log='all',log_freq=10)
 
     mini_batches = 0
     train_loss = 0.0
@@ -90,8 +90,6 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
             image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
             gt = gt.squeeze(1)
             gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
-
-            #print(image.shape,gt.shape)
 
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
@@ -114,8 +112,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,config):
 
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
-                #val_loss = validation(nn_model,val_set_loader,loss_func)
-                #training_log(val_loss,mini_batches)
+                val_loss = validation(nn_model,val_set_loader,loss_func)
+                training_log(val_loss,mini_batches)
                 training_log(train_loss,mini_batches,False)
 
                 PATH = "model.pt"
