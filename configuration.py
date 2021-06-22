@@ -2,7 +2,7 @@ import torch
 
 class training_config():
     batch_size = 4
-    number_epochs = 20
+    number_epochs = 10
     learning_rate = 0.00001
     number_workers = 2
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -11,7 +11,7 @@ class training_config():
 class train_data_config():
     training_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_train/"
     train_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/ground_truth_train/"
-    training_data_size = 70
+    training_data_size = 60
 
 class validation_data_config():
     validation_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_val/"
