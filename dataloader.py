@@ -34,6 +34,8 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == 127)] = 1 #green windows
         gt[np.all(gt == 38)] = 2 #blue doors
 
+        image = image.reshape([image.shape[-1],image.shape[0],image.shape[1]]
+        gt = gt.reshape([gt.shape[-1],gt.shape[0],gt.shape[1]]
         print(np.shape(image),np.shape(gt))
 
         #plt.imsave(self.images[index],arr=gt/255)       
