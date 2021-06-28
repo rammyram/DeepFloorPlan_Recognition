@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
 import os
 import torch
@@ -31,10 +32,11 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == (0,0,0),axis=-1)] = 0 #black background
         gt[np.all(gt == (127,0,0),axis=-1)] = 1 #red
         gt[np.all(gt == (127,127,127),axis=-1)] = 2 #white
-               
+
+        plt.imsave(gt)       
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
-        print(np.shape(gt))
+        
         return image, gt
