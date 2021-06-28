@@ -102,7 +102,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             else:
                 image,gt = image, gt
             
-            gt = torch.tensor(gt, dtype=torch.long, device=configuration.training_config.device.type)
+            gt = torch.tensor(gt, dtype=torch.long)
             output = nn_model(image)
             loss = loss_func(output, gt)
             
