@@ -31,7 +31,7 @@ class FloorPlanDataset(Dataset):
         gt = np.array(gt,dtype=np.float32)
 
         gt[np.all(gt == 0)] = 0 #black background
-        gt[np.all(gt == 127] = 1 #green windows
+        gt[np.all(gt == 127)] = 1 #green windows
         gt[np.all(gt == 38)] = 2 #blue doors
 
 
