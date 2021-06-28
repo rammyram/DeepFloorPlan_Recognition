@@ -102,6 +102,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             else:
                 image,gt = image, gt
             
+            print(type(gt),np.shape(gt))
             output = nn_model(image)
             loss = loss_func(output, gt)
             
