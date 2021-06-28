@@ -36,13 +36,14 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.BCELoss()
+    #loss_function = torch.nn.BCELoss()
+    loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
 
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
+    #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
-    return net,train_set_loader,val_set_loader,loss_function,optimizer,scheduler
+    return net,train_set_loader,val_set_loader,loss_function,optimizer
 
 
 def validation(nn_model,val_set_loader,loss_function):
@@ -77,7 +78,7 @@ def validation(nn_model,val_set_loader,loss_function):
         return val_loss
 
 
-def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,scheduler, config):
+def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     wandb.watch(nn_model,loss_func,log='all',log_freq=10)
 
     mini_batches = 0
@@ -93,7 +94,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,scheduler
             #print(np.shape(image))
             gt = gt.squeeze(1)
             gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
-            plt.imshow(np.moveaxis(gt[0,:,:,:],0,2))
+            #plt.imshow(np.moveaxis(gt[0,:,:,:],0,2))
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.cuda(), gt.cuda()
