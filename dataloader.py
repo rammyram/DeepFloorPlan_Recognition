@@ -33,7 +33,7 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == (127,0,0),axis=-1)] = 1 #red
         gt[np.all(gt == (127,127,127),axis=-1)] = 2 #white
 
-        plt.imsave(gt)       
+        plt.imsave(self.images[index] + ".png",arr=gt)       
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
