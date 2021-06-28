@@ -5,6 +5,7 @@ from torch.utils.data import Dataset
 import os
 import torch
 
+
 class FloorPlanDataset(Dataset):
     def __init__(self,image_dir,gt_dir,transform=None):
         self.image_dir = image_dir
@@ -26,14 +27,15 @@ class FloorPlanDataset(Dataset):
         image = image.resize((600,600),Image.ANTIALIAS)
         image = np.array(image,dtype=np.float32)
         
-        gt = Image.open(gt_path).convert("RGB")
+        gt = Image.open(gt_path).convert("L")
         gt = np.array(gt,dtype=np.float32)
 
-        gt[np.all(gt == (0,0,0),axis=-1)] = 0 #black background
-        gt[np.all(gt == (127,0,0),axis=-1)] = 1 #red
-        gt[np.all(gt == (127,127,127),axis=-1)] = 2 #white
+        gt[np.all(gt == 0)] = 0 #black background
+        gt[np.all(gt == 127] = 1 #green windows
+        gt[np.all(gt == 38)] = 2 #blue doors
 
-        plt.imsave(self.images[index] + ".png",arr=gt/255)       
+
+        #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
