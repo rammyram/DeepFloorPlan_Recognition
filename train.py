@@ -16,8 +16,8 @@ def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
         config = wandb.config
 
-        model,train_loader,val_loader,loss_func,optimizer,scheduler = nn_model(config)
-        train(model,train_loader,val_loader,loss_func,optimizer,scheduler, config)
+        model,train_loader,val_loader,loss_func,optimizer = nn_model(config)
+        train(model,train_loader,val_loader,loss_func,optimizer, config)
     return model
 
 def nn_model(config):
@@ -85,8 +85,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        scheduler.step()
-        print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
+        #scheduler.step()
+        #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
             #print(np.shape(gt))
             image = image.squeeze(1)
