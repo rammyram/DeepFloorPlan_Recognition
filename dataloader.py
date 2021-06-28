@@ -34,12 +34,13 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == 127)] = 1 #green windows
         gt[np.all(gt == 38)] = 2 #blue doors
 
+        print(np.shape(image),np.shape(gt))
 
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is not None:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
-        print(np.shape(image),np.shape(gt))
+        
         
         return image, gt
