@@ -87,7 +87,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer,scheduler
         scheduler.step()
         print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
-            
+            plt.imshow(gt[0])
             image = image.squeeze(1)
             image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
             gt = gt.squeeze(1)
