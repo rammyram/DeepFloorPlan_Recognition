@@ -41,7 +41,7 @@ def nn_model(config):
     #loss_function = torch.nn.BCELoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
-    loss_function = loss.cross_entropy()
+    loss_function = ls.cross_entropy()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
     #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
@@ -105,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             
             output = nn_model(image)
-            loss = ls.cross_entropy(output, gt)
+            loss = loss_func(output, gt)
             
             
             optimizer.zero_grad()
