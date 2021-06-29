@@ -11,6 +11,7 @@ import os
 import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
+import loss as ls
 #from pytorch_toolbelt import losses as L
 
 def wandb_initializer(args):
@@ -38,9 +39,9 @@ def nn_model(config):
         net.cuda()
 
     #loss_function = torch.nn.BCELoss()
-    loss_function = torch.nn.CrossEntropyLoss()
+    #loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
-
+    loss_function = loss.cross_entropy()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
     #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
@@ -104,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             
             output = nn_model(image)
-            loss = loss_func(output, gt)
+            loss = ls.cross_entropy(output, gt)
             
             
             optimizer.zero_grad()
