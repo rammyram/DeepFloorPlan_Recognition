@@ -1,4 +1,5 @@
 import torch
+from torch._C import device, dtype
 import torchvision
 import wandb
 from torchvision import transforms
@@ -96,7 +97,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.cuda(), gt.cuda()
+                image,gt = image.to(device,dtype=torch.int64),gt.to(device,dtype=torch.int64)
             else:
                 image,gt = image, gt
             
