@@ -12,7 +12,7 @@ class CrossEntropyLoss(nn.Module):
     log_softmax = nn.LogSoftmax()
 
     def __init__(self, class_weights):
-        super().__init__()
+        super(CrossEntropyLoss,self).__init__()
         self.class_weights = autograd.Variable(torch.FloatTensor(class_weights).cuda())
 
     def forward(self, logits, target):
