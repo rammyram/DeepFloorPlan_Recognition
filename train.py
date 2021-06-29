@@ -82,7 +82,7 @@ def validation(nn_model,val_set_loader):
 
 
 def train(nn_model,train_set_loader,val_set_loader,optimizer, config):
-    wandb.watch(nn_model,loss_func,log='all',log_freq=10)
+    wandb.watch(nn_model,log='all',log_freq=10)
 
     mini_batches = 0
     train_loss = 0.0
