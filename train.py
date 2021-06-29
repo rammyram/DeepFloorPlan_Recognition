@@ -39,9 +39,9 @@ def nn_model(config):
         net.cuda()
 
     #loss_function = torch.nn.BCELoss()
-    #loss_function = torch.nn.CrossEntropyLoss()
+    loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
-    loss_function = CrossEntropyLoss()
+    #loss_function = CrossEntropyLoss()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
     #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
@@ -67,7 +67,7 @@ def validation(nn_model,val_set_loader,loss_func):
         else:
             image,gt = image, gt
 
-        
+        print(type(gt.long))
         output = nn_model(image)
         loss = loss_func(output, gt)
        
