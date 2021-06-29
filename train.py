@@ -82,7 +82,7 @@ def validation(nn_model,val_set_loader,loss_func):
 
 
 def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
-    wandb.watch(nn_model,log='all',log_freq=10)
+    wandb.watch(nn_model,loss_func,log='all',log_freq=10)
 
     mini_batches = 0
     train_loss = 0.0
@@ -93,9 +93,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         for batch_id,(image,gt) in enumerate(train_set_loader):
             
             image = image.squeeze(1)
-            image = image.long()
+            
             gt = gt.squeeze(1)
-            gt = gt.long()
+            
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
