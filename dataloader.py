@@ -41,7 +41,7 @@ class FloorPlanDataset(Dataset):
 
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is not None:
-            image = torch.tensor([image],dtype=torch.float)
+            image = torch.tensor([image],dtype=torch.long)
             gt = torch.tensor([gt],dtype=torch.long)
         
         print(type(gt))
