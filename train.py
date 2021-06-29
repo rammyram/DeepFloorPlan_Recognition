@@ -95,6 +95,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             image = image.float()
             gt = gt.squeeze(1)
             gt = gt.float()
+            print(type(image))
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.int64),gt.to(device=configuration.training_config.device.type,dtype=torch.int64)
