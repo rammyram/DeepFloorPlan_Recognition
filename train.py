@@ -92,10 +92,10 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         for batch_id,(image,gt) in enumerate(train_set_loader):
             
             image = image.squeeze(1)
-            image = image.float()
+            image = image.long()
             gt = gt.squeeze(1)
-            gt = gt.float()
-            print(type(image))
+            gt = gt.long()
+            
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.int64),gt.to(device=configuration.training_config.device.type,dtype=torch.int64)
