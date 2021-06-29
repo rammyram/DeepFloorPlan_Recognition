@@ -11,15 +11,15 @@ import os
 import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
-import loss as ls
+from loss import CrossEntropyLoss
 #from pytorch_toolbelt import losses as L
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
         config = wandb.config
 
-        model,train_loader,val_loader,optimizer = nn_model(config)
-        train(model,train_loader,val_loader,optimizer, config)
+        model,train_loader,val_loader,loss_func,optimizer = nn_model(config)
+        train(model,train_loader,val_loader,loss_func,optimizer, config)
     return model
 
 def nn_model(config):
@@ -41,14 +41,14 @@ def nn_model(config):
     #loss_function = torch.nn.BCELoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
-    #loss_function = ls.cross_entropy()
+    loss_function = CrossEntropyLoss()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
     #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
 
-    return net,train_set_loader,val_set_loader,optimizer
+    return net,train_set_loader,val_set_loader,loss_function,optimizer
 
 
-def validation(nn_model,val_set_loader):
+def validation(nn_model,val_set_loader,loss_func):
     print("Validating.....")
     
     nn_model.eval()
@@ -69,7 +69,7 @@ def validation(nn_model,val_set_loader):
 
         
         output = nn_model(image)
-        loss = ls.cross_entropy(output, gt)
+        loss = loss_func(output, gt)
        
 
         mini_batches += 1
@@ -81,7 +81,7 @@ def validation(nn_model,val_set_loader):
         return val_loss
 
 
-def train(nn_model,train_set_loader,val_set_loader,optimizer, config):
+def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     wandb.watch(nn_model,log='all',log_freq=10)
 
     mini_batches = 0
@@ -105,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,optimizer, config):
             
             
             output = nn_model(image)
-            loss = ls.cross_entropy(output, gt)
+            loss = loss_func(output, gt)
             
             
             optimizer.zero_grad()
