@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from torch._C import dtype
 from torch.utils.data import Dataset
 import os
 import torch
@@ -41,7 +42,7 @@ class FloorPlanDataset(Dataset):
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is not None:
             image = torch.tensor([image])
-            gt = torch.tensor([gt])
+            gt = torch.tensor([gt],dtype=torch.long)
         
         #print(np.shape(image),np.shape(gt))
         
