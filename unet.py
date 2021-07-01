@@ -32,7 +32,7 @@ class UNet(nn.Module):
 
         self.bottleneck = DoubleConv(features[-1],features[-1] * 2)
         self.final_conv = nn.Conv2d(features[0],n_classes,kernel_size=1)
-        self.softmax = nn.Softmax(dim=0)
+        #self.softmax = nn.Softmax(dim=0)
 
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
@@ -63,7 +63,7 @@ class UNet(nn.Module):
             concat_skip = torch.cat((skip_connection,x),dim=1)
             x = self.ups[idx + 1](concat_skip)
         
-        x = self.softmax(self.final_conv(x))
+        x = self.final_conv(x)
         
         return x
    
