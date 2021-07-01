@@ -39,7 +39,7 @@ def nn_model(config):
         net.cuda()
 
     #loss_function = torch.nn.BCELoss()
-    loss_function = torch.nn.CrossEntropyLoss(ignore_index=-1,reduction='mean')
+    loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
     #loss_function = CrossEntropyLoss()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
@@ -96,8 +96,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             gt = gt.squeeze(1)
             
-            torch.tensor(image,dtype=torch.long)
-            torch.tensor(gt,dtype=torch.long)
+            #torch.tensor(image,dtype=torch.long)
+            #torch.tensor(gt,dtype=torch.long)
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
@@ -105,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             else:
                 image,gt = image, gt
             
-            print("Data formats:",image.type(),gt.type())
+            #print("Data formats:",image.type(),gt.type())
             output = nn_model(image)
             loss = loss_func(output, gt)
             
