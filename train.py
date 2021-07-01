@@ -1,3 +1,4 @@
+from numpy.core.defchararray import index
 import torch
 from torch._C import device, dtype
 import torchvision
@@ -38,8 +39,8 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.BCEWithLogitsLoss()
-    #loss_function = torch.nn.CrossEntropyLoss()
+    #loss_function = torch.nn.BCEWithLogitsLoss()
+    loss_function = torch.nn.CrossEntropyLoss(index=-1)
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
     #loss_function = CrossEntropyLoss()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
