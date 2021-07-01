@@ -105,9 +105,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             else:
                 image,gt = image, gt
             
-            #print("Data formats:",image.type(),gt.type())
+            print(image)
             output = nn_model(image)
-            print(output)
+            
             loss = loss_func(output, gt)
             
             
