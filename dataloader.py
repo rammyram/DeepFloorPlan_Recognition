@@ -31,10 +31,13 @@ class FloorPlanDataset(Dataset):
         gt = Image.open(gt_path).convert("L")
         gt = np.array(gt,dtype=np.float32)
 
-        gt[np.all(gt == 0)] = 0 #black background
+        image = image/255.0
+        gt = gt/255.0
+        
+        gt[np.all(gt == 0.0)] = 0 #black background
         #gt[np.all(gt == 127)] = 1 #green windows
         #gt[np.all(gt == 38)] = 2 #blue doors
-        gt[np.all(gt == 255)] = 1
+        gt[np.all(gt == 1.0)] = 1
 
         image = image.reshape([image.shape[-1],image.shape[0],image.shape[1]])
         gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
