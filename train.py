@@ -67,7 +67,7 @@ def validation(nn_model,val_set_loader,loss_func):
         else:
             image,gt = image, gt
 
-        print(image.type(),gt.type())
+        
         output = nn_model(image)
         loss = loss_func(output, gt)
        
@@ -96,7 +96,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             gt = gt.squeeze(1)
             
-            
+            print(image.type(),gt.type())
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.type(torch.cuda.LongTensor).to(configuration.training_config.device.type),gt.type(torch.cuda.LongTensor).to(configuration.training_config.device.type)
