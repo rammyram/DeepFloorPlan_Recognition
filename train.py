@@ -38,7 +38,7 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.BCELoss()
+    loss_function = torch.nn.BCEWithLogitsLoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
     #loss_function = CrossEntropyLoss()
