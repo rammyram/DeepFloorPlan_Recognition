@@ -29,7 +29,7 @@ class FloorPlanDataset(Dataset):
         image = np.array(image,dtype=np.float32)
         
         gt = Image.open(gt_path).convert("L")
-        gt = np.array(gt,dtype=np.float32)
+        gt = np.array(gt,dtype=np.long)
 
         #image = image/255.0
         gt = gt/255.0
@@ -47,7 +47,7 @@ class FloorPlanDataset(Dataset):
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
-        #gt = gt.to(dtype=torch.long)
+        gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
         return image, gt
