@@ -33,7 +33,7 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(n_classes=2)
+    net = UNet(n_classes=1)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
