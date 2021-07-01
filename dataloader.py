@@ -44,7 +44,7 @@ class FloorPlanDataset(Dataset):
             image = torch.tensor([image],dtype=torch.long)
             gt = torch.tensor([gt],dtype=torch.long)
         
-        print(gt.type(),image.type())
+        
         #print(np.shape(image),np.shape(gt))
         
         return image, gt
