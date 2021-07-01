@@ -40,7 +40,7 @@ def nn_model(config):
         net.cuda()
 
     #loss_function = torch.nn.BCEWithLogitsLoss()
-    loss_function = torch.nn.CrossEntropyLoss(index=-1)
+    loss_function = torch.nn.CrossEntropyLoss()
     #loss_function = L.DiceLoss(mode="multiclass",classes=2)
     #loss_function = CrossEntropyLoss()
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
