@@ -22,7 +22,7 @@ class FloorPlanDataset(Dataset):
         
         
         gt_path = os.path.join(self.gt_dir,self.images[index])
-        gt_path = gt_path.replace(".jpg",".png")
+        gt_path = gt_path.replace(".jpg","_windows.png")
 
         image = Image.open(image_path).convert("RGB")
         image = image.resize((600,600),Image.ANTIALIAS)
