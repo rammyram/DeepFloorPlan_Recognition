@@ -101,11 +101,11 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.type(torch.cuda.LongTensor).to(configuration.training_config.device.type),gt.type(torch.cuda.LongTensor).to(configuration.training_config.device.type)
+                image,gt = image.cuda(),gt.cuda()
             else:
                 image,gt = image, gt
             
-            print(image.type(),gt.type())
+            print("Data formats:",image.type(),gt.type())
             output = nn_model(image)
             loss = loss_func(output, gt)
             
