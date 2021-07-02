@@ -61,7 +61,7 @@ def validation(nn_model,val_set_loader,loss_func):
         image = image.squeeze(1)
         #image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
         
-        gt = gt.squeeze(1)
+        #gt = gt.squeeze(1)
         #gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
         if(configuration.training_config.device.type == 'cuda'):
             image,gt = image.cuda(), gt.cuda()
@@ -95,7 +95,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             image = image.squeeze(1)
             
-            gt = gt.squeeze(1)
+            #gt = gt.squeeze(1)
             
             #torch.tensor(image,dtype=torch.long)
             #torch.tensor(gt,dtype=torch.long)
