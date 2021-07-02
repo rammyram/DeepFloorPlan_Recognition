@@ -13,7 +13,6 @@ import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
 from loss import CrossEntropyLoss
-#from pytorch_toolbelt import losses as L
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -24,10 +23,10 @@ def wandb_initializer(args):
     return model
 
 def nn_model(config):
-    data_transformers = transforms.Compose([transforms.ToTensor()])
+    #data_transformers = transforms.Compose([transforms.ToTensor()])
 
-    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,gt_dir=configuration.train_data_config.train_ground_truth_dir,transform=data_transformers)
-    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,gt_dir=configuration.validation_data_config.validation_ground_truth_dir,transform=data_transformers)
+    train_set = FloorPlanDataset(image_dir=configuration.train_data_config.training_set_dir,gt_dir=configuration.train_data_config.train_ground_truth_dir,transform=True)
+    val_set = FloorPlanDataset(image_dir=configuration.validation_data_config.validation_set_dir,gt_dir=configuration.validation_data_config.validation_ground_truth_dir,transform=True)
 
     #Loading train and val set
     train_set_loader = DataLoader(train_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
@@ -41,7 +40,7 @@ def nn_model(config):
 
     loss_function = torch.nn.BCEWithLogitsLoss()
     #loss_function = torch.nn.CrossEntropyLoss()
-    #loss_function = L.DiceLoss(mode="multiclass",classes=2)
+    
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
     #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
@@ -59,12 +58,10 @@ def validation(nn_model,val_set_loader,loss_func):
 
     for batch_id,(image,gt) in enumerate(val_set_loader):
         image = image.squeeze(1)
-        #image = image.reshape([image.shape[0],image.shape[-1],image.shape[2],image.shape[1]])
-        
         #gt = gt.squeeze(1)
-        #gt = gt.reshape([gt.shape[0],gt.shape[3],gt.shape[2],gt.shape[1]])
+        
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt = image.cuda(), gt.cuda()
+            image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.long)
         else:
             image,gt = image, gt
 
@@ -95,20 +92,13 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             image = image.squeeze(1)
             
-            #gt = gt.squeeze(1)
-            
-            #torch.tensor(image,dtype=torch.long)
-            #torch.tensor(gt,dtype=torch.long)
-            
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.cuda(),gt.cuda()
+                image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.long)
             else:
                 image,gt = image, gt
             
-            #print(image)
             output = nn_model(image)
-            
             loss = loss_func(output, gt)
             
             
