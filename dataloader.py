@@ -39,7 +39,7 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == 0.149)] = 2 #blue doors
         #gt[np.all(gt == 1.0)] = 1
 
-        image = image.reshape([image.shape[-1],image.shape[0],image.shape[1]])
+        image = np.transpose(image, (2,0,1))
         #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
 
         #plt.imsave(self.images[index],arr=gt/255)       
