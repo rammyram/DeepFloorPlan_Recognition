@@ -8,7 +8,7 @@ import torch
 
 
 class FloorPlanDataset(Dataset):
-    def __init__(self,image_dir,gt_dir,transform=None):
+    def __init__(self,image_dir,gt_dir,transform=False):
         self.image_dir = image_dir
         self.gt_dir = gt_dir
         self.transform = transform
@@ -43,7 +43,7 @@ class FloorPlanDataset(Dataset):
         #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
 
         #plt.imsave(self.images[index],arr=gt/255)       
-        if self.transform is not None:
+        if self.transform is True:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
