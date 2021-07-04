@@ -89,9 +89,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     for epoch in range(config.epochs):
         #scheduler.step()
         #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
-        for batch_id,(image,gt) in enumerate(train_set_loader):
-            print(batch_id)
-            #image = image.squeeze(1)
+        for batch_id,(image,gt,img_path) in enumerate(train_set_loader):
+            print(img_path)
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
