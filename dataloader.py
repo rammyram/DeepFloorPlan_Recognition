@@ -22,7 +22,7 @@ class FloorPlanDataset(Dataset):
         
         
         gt_path = os.path.join(self.gt_dir,self.images[index])
-        gt_path = gt_path.replace(".jpg","_windows.png")
+        gt_path = gt_path.replace(".jpg",".png")
 
         image = Image.open(image_path).convert("L")
         image = image.resize((600,600),Image.ANTIALIAS)
@@ -47,7 +47,7 @@ class FloorPlanDataset(Dataset):
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
-        #gt = gt.type(torch.LongTensor)
+        gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
         return image, gt, self.images[index]
