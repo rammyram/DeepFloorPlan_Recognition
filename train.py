@@ -90,7 +90,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         #scheduler.step()
         #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
-            
+            print(batch_id)
             #image = image.squeeze(1)
             
             nn_model.train()
@@ -100,9 +100,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 image,gt = image, gt
             
             output = nn_model(image)
-            loss = loss_func(output, gt)
-            print(image)    
-            
+            loss = loss_func(output, gt)    
             
             optimizer.zero_grad()
             loss.backward()
@@ -127,8 +125,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                     image = np.float(output.cpu().detach().numpy())
                     image = Image.fromarray(image)
                     image.save("Image_" + )                
-                train_loss = 0.0
                 """
+                train_loss = 0.0
+                
             
 
 
