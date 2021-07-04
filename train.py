@@ -123,11 +123,11 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 
                 if(epoch == config.epochs - 1):
                     image = output.cpu().detach().numpy()
-                    print(np.shape(image[0]))
-                    
-                    image = Image.fromarray(image)
-                    image.save("Image_" + img_id[:-4] + ".png")                
-                    print("Image " + img_id + " saved.")
+                    #print(np.shape(image[0]))
+                    for i in range(2):
+                        image = Image.fromarray(image[i])
+                        image.save("Image_" + img_id[i][:-4] + ".png")                
+                    print("Image " + img_id[i] + " saved.")
                 
                 train_loss = 0.0
                 
