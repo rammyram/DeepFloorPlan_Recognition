@@ -33,13 +33,13 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(n_classes=1)
+    net = UNet(n_classes=2)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.BCEWithLogitsLoss()
-    #loss_function = torch.nn.CrossEntropyLoss()
+    #loss_function = torch.nn.BCEWithLogitsLoss()
+    loss_function = torch.nn.CrossEntropyLoss()
     
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
@@ -61,7 +61,7 @@ def validation(nn_model,val_set_loader,loss_func):
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.float)
+            image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.long)
         else:
             image,gt = image, gt
 
@@ -94,7 +94,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.float)
+                image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.long)
             else:
                 image,gt = image, gt
             
