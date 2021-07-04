@@ -128,7 +128,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                         img = np.reshape(image[i],(600,600))
                         print(np.shape(img))
                         img = Image.fromarray(img)
-                        img.save("Image_" + img_id[i][:-4] + ".png")                
+                        img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
                     print("Image " + img_id[i] + " saved.")
                 
                 train_loss = 0.0
