@@ -1,6 +1,7 @@
 from numpy.core.defchararray import index
 import torch
 from torch._C import device, dtype
+from torch.nn.modules import loss
 import torchvision
 import wandb
 from torchvision import transforms
@@ -39,7 +40,9 @@ def nn_model(config):
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
-    loss_function = torch.nn.BCEWithLogitsLoss()
+    
+    #loss_function = torch.nn.BCEWithLogitsLoss()
+    loss_function = torch.nn.BCELoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     
     
