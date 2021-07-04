@@ -57,14 +57,14 @@ def validation(nn_model,val_set_loader,loss_func):
     val_loss = 0.0
     mini_batches = 0
 
-    for batch_id,(image,gt) in enumerate(val_set_loader):
+    for batch_id,(image,gt,img_id) in enumerate(val_set_loader):
         #image = image.squeeze(1)
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.float)
+            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
         else:
-            image,gt = image, gt
+            image,gt, img_id = image, gt, img_id
 
         
         output = nn_model(image)
@@ -121,7 +121,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
 
                 
-                if(epoch == config.epochs):
+                if(epoch == config.epochs - 1):
                     image = np.float(output.cpu().detach().numpy())
                     image = Image.fromarray(image)
                     image.save("Image_" + img_id[:-4] + ".png")                
