@@ -79,12 +79,12 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
 
         if(epoch == config.epochs - 1):
             image = output.cpu().detach().numpy()
-                for i in range(2):
-                    img = np.reshape(image[i],(600,600))
+            for i in range(2):
+                img = np.reshape(image[i],(600,600))
         
-                    img = Image.fromarray(img).convert("L")
-                    img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
-                    print("Image " + img_id[i] + " saved.")
+                img = Image.fromarray(img).convert("L")
+                img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
+                print("Image " + img_id[i] + " saved.")
 
         return val_loss
 
