@@ -49,7 +49,7 @@ def nn_model(config):
     return net,train_set_loader,val_set_loader,loss_function,optimizer
 
 
-def validation(nn_model,val_set_loader,loss_func):
+def validation(nn_model,val_set_loader,loss_func,epoch,config):
     print("Validating.....")
     
     nn_model.eval()
@@ -76,6 +76,15 @@ def validation(nn_model,val_set_loader,loss_func):
 
         val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
+
+        if(epoch == config.epochs - 1):
+            image = output.cpu().detach().numpy()
+                for i in range(2):
+                    img = np.reshape(image[i],(600,600))
+        
+                    img = Image.fromarray(img).convert("L")
+                    img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
+                    print("Image " + img_id[i] + " saved.")
 
         return val_loss
 
@@ -113,23 +122,12 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
-                val_loss = validation(nn_model,val_set_loader,loss_func)
+                val_loss = validation(nn_model,val_set_loader,loss_func,epoch)
                 training_log(val_loss,mini_batches)
                 training_log(train_loss/mini_batches,mini_batches,False)
 
                 PATH = "model.pt"
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
-
-                
-                if(epoch == config.epochs - 1):
-                    image = output.cpu().detach().numpy()
-                    #print(np.shape(image[1]))
-                    for i in range(2):
-                        img = np.reshape(image[i],(600,600))
-                        print(np.shape(img))
-                        img = Image.fromarray(img).convert("L")
-                        img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
-                    print("Image " + img_id[i] + " saved.")
                 
                 train_loss = 0.0
                 
