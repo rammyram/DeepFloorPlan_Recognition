@@ -93,7 +93,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             
             nn_model.train()
-            print(img_id)
+            
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
             else:
@@ -120,12 +120,12 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 PATH = "model.pt"
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
 
-                """
+                
                 if(epoch == config.epochs):
                     image = np.float(output.cpu().detach().numpy())
                     image = Image.fromarray(image)
-                    image.save("Image_" + )                
-                """
+                    image.save("Image_" + img_id[:-4] + ".png")                
+                    print("Image " + img_id + " saved.")
                 train_loss = 0.0
                 
             
