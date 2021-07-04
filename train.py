@@ -13,6 +13,7 @@ import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
 from loss import CrossEntropyLoss
+from PIL import Image
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -100,6 +101,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             output = nn_model(image)
             loss = loss_func(output, gt)
+            print(image)    
             
             
             optimizer.zero_grad()
@@ -120,8 +122,15 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 PATH = "model.pt"
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
 
-                
+                """
+                if(epoch == config.epochs):
+                    image = np.float(output.cpu().detach().numpy())
+                    image = Image.fromarray(image)
+                    image.save("Image_" + )                
                 train_loss = 0.0
+                """
+            
+
 
             print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
 
@@ -130,3 +139,5 @@ def training_log(loss,mini_batch,train=True):
         wandb.log({'batch':mini_batch,'loss':loss})
     else:
         wandb.log({'batch':mini_batch,'loss':loss})
+
+
