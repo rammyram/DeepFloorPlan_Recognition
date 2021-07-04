@@ -22,7 +22,7 @@ class FloorPlanDataset(Dataset):
         
         
         gt_path = os.path.join(self.gt_dir,self.images[index])
-        gt_path = gt_path.replace(".jpg",".png")
+        gt_path = gt_path.replace(".jpg","_doors.png")
 
         image = Image.open(image_path).convert("L")
         image = image.resize((600,600),Image.ANTIALIAS)
@@ -35,9 +35,9 @@ class FloorPlanDataset(Dataset):
         gt = gt/255.0
 
         gt[np.all(gt == 0.0)] = 0 #black background
-        gt[np.all(gt == 0.498)] = 1 #green windows
-        gt[np.all(gt == 0.149)] = 2 #blue doors
-        #gt[np.all(gt == 1.0)] = 1
+        #gt[np.all(gt == 0.498)] = 1 #green windows
+        #gt[np.all(gt == 0.149)] = 2 #blue doors
+        gt[np.all(gt == 1.0)] = 1
 
         #image = np.transpose(image, (2,0,1))
         #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
