@@ -65,7 +65,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
+            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.long),img_id
         else:
             image,gt, img_id = image, gt, img_id
 
@@ -108,7 +108,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             nn_model.train()
             
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
+                image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.long),img_id
             else:
                 image,gt,img_id = image, gt, img_id
             
