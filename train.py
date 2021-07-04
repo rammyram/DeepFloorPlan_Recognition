@@ -122,7 +122,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
             #Plotting in wandb
             if(mini_batches % configuration.training_config.plot_frequency == 0):
-                val_loss = validation(nn_model,val_set_loader,loss_func,epoch)
+                val_loss = validation(nn_model,val_set_loader,loss_func,epoch,config)
                 training_log(val_loss,mini_batches)
                 training_log(train_loss/mini_batches,mini_batches,False)
 
