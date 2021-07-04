@@ -127,7 +127,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                     for i in range(2):
                         img = np.reshape(image[i],(600,600))
                         print(np.shape(img))
-                        img = Image.fromarray(img).convert("RGB")
+                        img = Image.fromarray(img).convert("L")
                         img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
                     print("Image " + img_id[i] + " saved.")
                 
