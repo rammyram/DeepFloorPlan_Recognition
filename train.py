@@ -80,6 +80,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
 
+        """
         if(epoch == config.epochs - 1):
             image = output.cpu().detach().numpy()
             for i in range(2):
@@ -88,7 +89,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
                 img = Image.fromarray(img).convert("L")
                 img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
                 print("Image " + img_id[i] + " saved.")
-
+        """
         return val_loss
 
 
