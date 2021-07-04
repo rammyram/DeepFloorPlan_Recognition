@@ -50,4 +50,4 @@ class FloorPlanDataset(Dataset):
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         print("Image:",image_path)
-        return image, gt
+        return image, gt, image_path
