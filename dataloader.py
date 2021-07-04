@@ -41,13 +41,13 @@ class FloorPlanDataset(Dataset):
 
         #image = np.transpose(image, (2,0,1))
         #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
-
+        
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
             image = torch.tensor([image])
             gt = torch.tensor([gt])
         
-        gt = gt.type(torch.LongTensor)
+        #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
         return image, gt
