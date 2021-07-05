@@ -48,8 +48,8 @@ class FloorPlanDataset(Dataset):
 
         target_labels = gt[...,0]
         for label in SEG_LABELS_LIST:
-            mask = np.all(gt == label['rgb_values'])
-            print(mask)
+            mask = np.all(gt == label['rgb_values'],axis=2)
+            #print(mask)
             target_labels[mask] = label['id']
         """
         gt[np.all(gt == (0.0,0.0,0.0))] = -1 #black background
@@ -63,7 +63,7 @@ class FloorPlanDataset(Dataset):
             image = torch.tensor([image])
             target_labels = torch.from_numpy(target_labels.copy())
 
-        print(torch.min(target_labels),torch.max(target_labels))
+        #print(torch.min(target_labels),torch.max(target_labels))
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
