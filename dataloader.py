@@ -49,6 +49,7 @@ class FloorPlanDataset(Dataset):
         target_labels = gt[...,0]
         for label in SEG_LABELS_LIST:
             mask = np.all(gt == label['rgb_values'])
+            print(mask)
             target_labels[mask] = label['id']
         """
         gt[np.all(gt == (0.0,0.0,0.0))] = -1 #black background
