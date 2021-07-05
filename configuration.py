@@ -2,7 +2,7 @@ import torch
 
 class training_config():
     batch_size = 2
-    number_epochs = 5
+    number_epochs = 1
     learning_rate = 0.00001
     number_workers = 2
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
