@@ -8,7 +8,7 @@ import torch
 
 SEG_LABELS_LIST = [
     {"id":-1,"name":"void","rgb_values":[0,0,0]},
-    {"id":0,"name":"wall","rgb_values":[128,0,0]}
+    {"id":0,"name":"wall","rgb_values":[1,1,1]}
 ]
 
 def label_img_to_rgb(label_img):
