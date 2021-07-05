@@ -39,12 +39,12 @@ class FloorPlanDataset(Dataset):
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg","_windows.png")
 
-        image = Image.open(image_path).convert("RGB").transpose(2,0,1)
+        image = Image.open(image_path).convert("RGB")
         image = image.resize((600,600),Image.ANTIALIAS)
-        image = np.array(image,dtype=np.float32)
+        image = np.array(image,dtype=np.float32).transpose(2,0,1)
         
-        gt = Image.open(gt_path).convert("RGB").transpose(2,0,1)
-        gt = np.array(gt,dtype=np.float32)
+        gt = Image.open(gt_path).convert("RGB")
+        gt = np.array(gt,dtype=np.float32).transpose(2,0,1)
 
         target_labels = gt[...,0]
         for label in SEG_LABELS_LIST:
