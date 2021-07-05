@@ -57,7 +57,7 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == 1.0)] = 0
         """
         image = np.transpose(image, (2,0,1))
-        #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
+        gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
         
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
