@@ -39,30 +39,32 @@ class FloorPlanDataset(Dataset):
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg","_windows.png")
 
-        image = Image.open(image_path).convert("L")
+        image = Image.open(image_path).convert("RGB")
         image = image.resize((600,600),Image.ANTIALIAS)
         image = np.array(image,dtype=np.float32)
         
-        gt = Image.open(gt_path).convert("L")
+        gt = Image.open(gt_path).convert("RGB")
         gt = np.array(gt,dtype=np.float32)
 
-        #image = image/255.0
-        gt = gt/255.0
-
-        gt[np.all(gt == 0.0)] = -1 #black background
+        target_labels = gt[...,0]
+        for label in SEG_LABELS_LIST:
+            mask = np.all(gt == label['rgb_values'],axis=2)
+            target_labels[mask] = label['id']
+        """
+        gt[np.all(gt == (0.0,0.0,0.0))] = -1 #black background
         #gt[np.all(gt == 0.498)] = 1 #green windows
         #gt[np.all(gt == 0.149)] = 2 #blue doors
         gt[np.all(gt == 1.0)] = 0
-
+        """
         #image = np.transpose(image, (2,0,1))
         #gt = gt.reshape([1,gt.shape[0],gt.shape[1]])
         
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
             image = torch.tensor([image])
-            gt = torch.tensor([gt])
+            target_labels = torch.from_numpy(target_labels.copy())
         
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
-        return image, gt, self.images[index]
+        return image, target_labels, self.images[index]
