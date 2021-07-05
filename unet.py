@@ -13,7 +13,7 @@ class DoubleConv(nn.Module):
 
     
 class UNet(nn.Module):
-    def __init__(self,n_classes,in_channels=1,features=[64,128,256]):
+    def __init__(self,n_classes,in_channels=3,features=[64,128,256]):
         super(UNet,self).__init__()
         self.n_classes = n_classes
         self.ups = nn.ModuleList()
@@ -64,7 +64,7 @@ class UNet(nn.Module):
             concat_skip = torch.cat((skip_connection,x),dim=1)
             x = self.ups[idx + 1](concat_skip)
         
-        x = self.sigmoid(self.final_conv(x))
+        x = self.final_conv(x)
         
         return x
    
