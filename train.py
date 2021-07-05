@@ -86,7 +86,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
             for i in range(2):
                 img = np.reshape(image[i],(600,600))
         
-                img = label_img_to_rgb(img.numpy())
+                img = label_img_to_rgb(img)
                 img.save("Image_" + img_id[i][:-4] + ".png","PNG")                
                 print("Image " + img_id[i] + " saved.")
         
