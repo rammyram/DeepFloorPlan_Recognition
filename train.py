@@ -105,6 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         for batch_id,(image,gt,img_id) in enumerate(train_set_loader):
             image = image.squeeze(1)
             #gt = gt.unsqueeze(1)
+            print(gt.shape)
             nn_model.train()
             
             if(configuration.training_config.device.type == 'cuda'):
