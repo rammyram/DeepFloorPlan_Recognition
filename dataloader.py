@@ -61,8 +61,8 @@ class FloorPlanDataset(Dataset):
         if self.transform is True:
             image = torch.tensor([image])
             target_labels = torch.from_numpy(target_labels.copy())
-            
-        print(np.min(target_labels),np.max(target_labels))
+
+        print(torch.min(target_labels),torch.max(target_labels))
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
