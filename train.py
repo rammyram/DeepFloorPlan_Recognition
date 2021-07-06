@@ -1,4 +1,5 @@
 from numpy.core.defchararray import index
+from numpy.core.fromnumeric import shape
 import torch
 from torch._C import device, dtype
 from torch.nn.modules import loss
@@ -15,6 +16,20 @@ from dataloader import FloorPlanDataset,label_img_to_rgb
 from unet import UNet
 from loss import CrossEntropyLoss
 from PIL import Image
+
+def visualizer(pred_image,epoch,config):
+    if (epoch == config.epoch - 1):
+        class_labels = ['void','windows']
+        class_labels_list = np.array([[0,0,0],[1,1,1]])
+
+    
+        prediction = torch.argmax(pred_image,dim=1)
+        for i in prediction:
+            pred_imgs = class_labels_list[i]
+    
+        for p in pred_imgs:
+            plt.imshow(pred_imgs)
+            plt.show()
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -79,17 +94,8 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
 
         val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
-
         
-        if(epoch == config.epochs - 1):
-            preds = output.cpu().detach().numpy()
-            for i in range(2):
-                img = np.reshape(preds[i],(600,600))
-        
-                img = label_img_to_rgb(img)
-                plt.imsave("Image_" + img_id[i][:-4] + ".png",img)                
-                print("Image " + img_id[i] + " saved.")
-        
+        visualizer(output,epoch,config)
         return val_loss
 
 
