@@ -57,7 +57,7 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == (0.0))] = 0 #black background
         #gt[np.all(gt == 0.498)] = 1 #green windows
         #gt[np.all(gt == 0.149)] = 2 #blue doors
-        gt[np.all(gt == (1.0))] = 1
+        gt[np.all(gt == (255))] = 1
         
         
         #plt.imsave(self.images[index],arr=gt/255)       
