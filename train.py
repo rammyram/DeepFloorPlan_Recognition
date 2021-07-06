@@ -17,19 +17,7 @@ from unet import UNet
 from loss import CrossEntropyLoss
 from PIL import Image
 
-def visualizer(pred_image,epoch,config):
-    if (epoch == config.epoch - 1):
-        class_labels = ['void','windows']
-        class_labels_list = np.array([[0,0,0],[1,1,1]])
 
-    
-        prediction = torch.argmax(pred_image,dim=1)
-        for i in prediction:
-            pred_imgs = class_labels_list[i]
-    
-        for p in pred_imgs:
-            plt.imshow(pred_imgs)
-            plt.show()
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -155,3 +143,16 @@ def training_log(loss,mini_batch,train=True):
         wandb.log({'batch':mini_batch,'loss':loss})
 
 
+def visualizer(pred_image,epoch,config):
+    if (epoch == config.epoch - 1):
+        class_labels = ['void','windows']
+        class_labels_list = np.array([[0,0,0],[1,1,1]])
+
+    
+        prediction = torch.argmax(pred_image,dim=1)
+        for i in prediction:
+            pred_imgs = class_labels_list[i]
+    
+        for p in pred_imgs:
+            plt.imshow(pred_imgs)
+            plt.show()
