@@ -84,7 +84,8 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         print("Validation loss: ",val_loss)
         
         out_pred = nn_model.forward(image)
-        visualizer(out_pred.cpu(),epoch,config)
+        out = visualizer(out_pred.cpu(),epoch,config)
+        plt.imsave("Image_" + str(img_id) + ".png",out)
         return val_loss
 
 
@@ -149,11 +150,7 @@ def visualizer(pred_image,epoch,config):
         class_labels_list = np.array([[0],[1]])
 
         #print(pred_image)
+        pred_image[pred_image > 0.5] = 1.0
+        pred_image[pred_image < 0.5] = 0.0
 
-        prediction = torch.argmax(pred_image,dim=1)
-
-        for i in prediction:
-            pred_imgs = class_labels_list[i]
-    
-        for p in pred_imgs:
-            plt.imsave("image.png",p)
+        return pred_image
