@@ -46,17 +46,18 @@ class FloorPlanDataset(Dataset):
         gt = Image.open(gt_path).convert("RGB")
         gt = np.array(gt,dtype=np.float32).transpose(2,0,1)
 
+        """
         target_labels = gt[...,0]
         for label in SEG_LABELS_LIST:
             mask = np.all(gt == label['rgb_values'],axis=2)
             #print(mask)
             target_labels[mask] = label['id']
         """
-        gt[np.all(gt == (0.0,0.0,0.0))] = -1 #black background
+        gt[np.all(gt == (0.0,0.0,0.0))] = 0 #black background
         #gt[np.all(gt == 0.498)] = 1 #green windows
         #gt[np.all(gt == 0.149)] = 2 #blue doors
-        gt[np.all(gt == 1.0)] = 0
-        """
+        gt[np.all(gt == (1.0,1.0,1.0)] = 1
+        
         
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
