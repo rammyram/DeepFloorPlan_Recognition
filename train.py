@@ -38,15 +38,15 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(n_classes=1)
+    net = UNet(n_classes=2)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
     
     #loss_function = torch.nn.BCEWithLogitsLoss()
-    loss_function = torch.nn.BCELoss()
-    #loss_function = torch.nn.CrossEntropyLoss()
+    #loss_function = torch.nn.BCELoss()
+    loss_function = torch.nn.CrossEntropyLoss()
     
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
@@ -68,7 +68,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
+            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.long),img_id
         else:
             image,gt, img_id = image, gt, img_id
 
@@ -84,8 +84,8 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         print("Validation loss: ",val_loss)
         
         
-        out1 = visualizer(output.cpu(),epoch,config)
-        plt.imsave("Image_" + str(img_id[0]),out1)
+        #out1 = visualizer(output.cpu(),epoch,config)
+        #plt.imsave("Image_" + str(img_id[0]),out1)
         return val_loss
 
 
@@ -105,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             nn_model.train()
             
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.float),img_id
+                image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.LongTensor),img_id
             else:
                 image,gt,img_id = image, gt, img_id
             
