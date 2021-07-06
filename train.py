@@ -105,7 +105,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             nn_model.train()
             
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.LongTensor)
+                image,gt = image.cuda(),gt.cuda()
             else:
                 image,gt = image, gt
             
