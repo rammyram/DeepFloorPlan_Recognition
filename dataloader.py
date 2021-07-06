@@ -45,7 +45,7 @@ class FloorPlanDataset(Dataset):
         
         gt = Image.open(gt_path).convert("L")
         gt = np.array(gt,dtype=np.float32)
-        gt = np.reshape(gt,(1,np.shape(gt)[0],np.shape(gt)[1]))
+        #gt = np.reshape(gt,(1,np.shape(gt)[0],np.shape(gt)[1]))
 
         """
         target_labels = gt[...,0]
