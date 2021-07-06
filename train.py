@@ -144,7 +144,7 @@ def training_log(loss,mini_batch,train=True):
 
 
 def visualizer(pred_image,epoch,config):
-    if (epoch == config.epoch - 1):
+    if (epoch == config.epochs - 1):
         class_labels = ['void','windows']
         class_labels_list = np.array([[0,0,0],[1,1,1]])
 
