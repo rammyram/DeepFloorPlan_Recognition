@@ -155,5 +155,4 @@ def visualizer(pred_image,epoch,config):
             pred_imgs = class_labels_list[i]
     
         for p in pred_imgs:
-            plt.imshow(pred_imgs)
-            plt.show()
+            plt.imsave("image",p)
