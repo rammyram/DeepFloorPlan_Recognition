@@ -146,9 +146,10 @@ def training_log(loss,mini_batch,train=True):
 def visualizer(pred_image,epoch,config):
     if (epoch == config.epochs - 1):
         class_labels = ['void','windows']
-        class_labels_list = np.array([[0],[255]])
+        class_labels_list = np.array([[0],[1]])
 
-        print(pred_image)
+        #print(pred_image)
+
         prediction = torch.argmax(pred_image,dim=1)
 
         for i in prediction:
