@@ -68,6 +68,6 @@ class FloorPlanDataset(Dataset):
         #print(torch.min(target_labels),torch.max(target_labels))
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
-        #gt = gt.squeeze(1)
+        gt = gt.squeeze(0)
         print(gt.shape)
         return image, gt
