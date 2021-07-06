@@ -155,4 +155,4 @@ def visualizer(pred_image,epoch,config):
             predicted_img[predicted_img < 0.5] = 0.0
 
         #print(pred_image.shape)
-            return predicted_img[i].cpu().detach().cpu()
+        return predicted_img[0].cpu().detach().cpu()
