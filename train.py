@@ -63,16 +63,16 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
     val_loss = 0.0
     mini_batches = 0
 
-    for batch_id,(image,gt,img_id) in enumerate(val_set_loader):
+    for batch_id,(image,gt) in enumerate(val_set_loader):
         image = image.squeeze(1)
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float), gt.to(device=configuration.training_config.device.type,dtype=torch.long),img_id
+            image,gt = image.cuda(), gt.cuda()
         else:
-            image,gt, img_id = image, gt, img_id
+            image,gt = image, gt
 
-        
+        gt = torch.argmax(gt,dim=1)
         output = nn_model(image)
         loss = loss_func(output, gt)
        
@@ -112,7 +112,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             gt = torch.argmax(gt,dim=1)
             output = nn_model(image)
-            print(output.shape)
+            #print(output.shape)
             loss = loss_func(output, gt)    
             
             optimizer.zero_grad()
