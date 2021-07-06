@@ -146,12 +146,13 @@ def training_log(loss,mini_batch,train=True):
 
 def visualizer(pred_image,epoch,config):
     if (epoch == config.epochs - 1):
-        class_labels = ['void','windows']
-        class_labels_list = np.array([[0],[1]])
+        #class_labels = ['void','windows']
+        #class_labels_list = np.array([[0],[1]])
 
-        #print(pred_image)
-        pred_image[pred_image > 0.5] = 1.0
-        pred_image[pred_image < 0.5] = 0.0
+        for i in range(2):
+            predicted_img = pred_image[i]
+            predicted_img[predicted_img > 0.5] = 1.0
+            predicted_img[predicted_img < 0.5] = 0.0
 
-        print(pred_image.shape)
-        return pred_image.cpu().detach().cpu()
+        #print(pred_image.shape)
+            return predicted_img[i].cpu().detach().cpu()
