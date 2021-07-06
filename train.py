@@ -153,4 +153,5 @@ def visualizer(pred_image,epoch,config):
         pred_image[pred_image > 0.5] = 1.0
         pred_image[pred_image < 0.5] = 0.0
 
-        return pred_image
+        #print(pred_image)
+        return pred_image.cpu().detach().cpu()
