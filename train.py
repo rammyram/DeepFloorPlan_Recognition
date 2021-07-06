@@ -56,8 +56,8 @@ def nn_model(config):
         net.cuda()
 
     
-    #loss_function = torch.nn.BCEWithLogitsLoss()
-    loss_function = torch.nn.BCELoss()
+    loss_function = torch.nn.BCEWithLogitsLoss()
+    #loss_function = torch.nn.BCELoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     
     
