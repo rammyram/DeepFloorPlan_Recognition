@@ -56,8 +56,8 @@ def nn_model(config):
         net.cuda()
 
     
-    loss_function = torch.nn.BCEWithLogitsLoss()
-    #loss_function = torch.nn.BCELoss()
+    #loss_function = torch.nn.BCEWithLogitsLoss()
+    loss_function = torch.nn.BCELoss()
     #loss_function = torch.nn.CrossEntropyLoss()
     
     
@@ -76,7 +76,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
     mini_batches = 0
 
     for batch_id,(image,gt,img_id) in enumerate(val_set_loader):
-        #image = image.squeeze(1)
+        image = image.squeeze(1)
         #gt = gt.squeeze(1)
         
         if(configuration.training_config.device.type == 'cuda'):
