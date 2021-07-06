@@ -85,7 +85,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         
         
         out1 = visualizer(output.cpu(),epoch,config)
-        plt.imsave("Image_" + str(img_id[0]) + ".png",out1)
+        plt.imsave("Image_" + str(img_id[0]),out1)
         return val_loss
 
 
