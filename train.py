@@ -98,16 +98,16 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     for epoch in range(config.epochs):
         #scheduler.step()
         #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
-        for batch_id,(image,gt,img_id) in enumerate(train_set_loader):
+        for batch_id,(image,gt) in enumerate(train_set_loader):
             image = image.squeeze(1)
             #gt = gt.unsqueeze(1)
             
             nn_model.train()
             
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt,img_id = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.LongTensor),img_id
+                image,gt = image.to(device=configuration.training_config.device.type,dtype=torch.float),gt.to(device=configuration.training_config.device.type,dtype=torch.LongTensor)
             else:
-                image,gt,img_id = image, gt, img_id
+                image,gt = image, gt
             
             output = nn_model(image)
             loss = loss_func(output, gt)    
