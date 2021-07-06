@@ -62,8 +62,8 @@ class FloorPlanDataset(Dataset):
         
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
-            image = torch.tensor([image])
-            gt = torch.tensor([gt])
+            image = torch.tensor([image],dtype=torch.FloatTensor)
+            gt = torch.tensor([gt],dtype=torch.LongTensor)
 
         #print(torch.min(target_labels),torch.max(target_labels))
         #gt = gt.type(torch.LongTensor)
