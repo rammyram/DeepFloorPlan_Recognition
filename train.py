@@ -84,7 +84,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         print("Validation loss: ",val_loss)
         
         
-        #visualizer(output.cpu(),epoch,config)
+        visualizer(output.cpu(),epoch,config)
         return val_loss
 
 
@@ -109,7 +109,6 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 image,gt,img_id = image, gt, img_id
             
             output = nn_model(image)
-            print(output)
             loss = loss_func(output, gt)    
             
             optimizer.zero_grad()
@@ -149,8 +148,9 @@ def visualizer(pred_image,epoch,config):
         class_labels = ['void','windows']
         class_labels_list = np.array([[0],[255]])
 
-    
+        print(pred_image)
         prediction = torch.argmax(pred_image,dim=1)
+
         for i in prediction:
             pred_imgs = class_labels_list[i]
     
