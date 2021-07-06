@@ -37,14 +37,14 @@ class FloorPlanDataset(Dataset):
         
         
         gt_path = os.path.join(self.gt_dir,self.images[index])
-        gt_path = gt_path.replace(".jpg","_windows.png")
+        gt_path = gt_path.replace(".jpg",".png")
 
         image = Image.open(image_path).convert("RGB")
         image = image.resize((600,600),Image.ANTIALIAS)
         image = np.array(image,dtype=np.float32).transpose(2,0,1)
         
         gt = Image.open(gt_path).convert("L")
-        gt = np.array(gt,dtype=np.float32)
+        gt = np.array(gt,dtype=np.long)
         #gt = np.reshape(gt,(1,np.shape(gt)[0],np.shape(gt)[1]))
 
         """
@@ -55,9 +55,9 @@ class FloorPlanDataset(Dataset):
             target_labels[mask] = label['id']
         """
         gt[np.all(gt == (0.0))] = 0 #black background
-        #gt[np.all(gt == 0.498)] = 1 #green windows
-        #gt[np.all(gt == 0.149)] = 2 #blue doors
-        gt[np.all(gt == (255))] = 1
+        gt[np.all(gt == 0.498)] = 1 #green windows
+        gt[np.all(gt == 0.149)] = 2 #blue doors
+        #gt[np.all(gt == (255))] = 1
         
         
         #plt.imsave(self.images[index],arr=gt/255)       
