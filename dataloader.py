@@ -56,16 +56,16 @@ class FloorPlanDataset(Dataset):
         gt[np.all(gt == (0.0,0.0,0.0))] = 0 #black background
         #gt[np.all(gt == 0.498)] = 1 #green windows
         #gt[np.all(gt == 0.149)] = 2 #blue doors
-        gt[np.all(gt == (1.0,1.0,1.0)] = 1
+        gt[np.all(gt == (1.0,1.0,1.0))] = 1
         
         
         #plt.imsave(self.images[index],arr=gt/255)       
         if self.transform is True:
             image = torch.tensor([image])
-            target_labels = torch.from_numpy(target_labels.copy())
+            gt = torch.tensor([gt])
 
         #print(torch.min(target_labels),torch.max(target_labels))
         #gt = gt.type(torch.LongTensor)
         #print(np.shape(image),np.shape(gt))
         
-        return image, target_labels, self.images[index]
+        return image, gt, self.images[index]
