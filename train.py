@@ -83,8 +83,8 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
         
-        
-        visualizer(output.cpu(),epoch,config)
+        out_pred = nn_model.forward(image)
+        visualizer(out_pred.cpu(),epoch,config)
         return val_loss
 
 
