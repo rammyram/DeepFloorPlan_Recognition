@@ -23,8 +23,8 @@ def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
         config = wandb.config
 
-        model,train_loader,val_loader,loss_func,optimizer = nn_model(config)
-        train(model,train_loader,val_loader,loss_func,optimizer, config)
+        model,train_loader,val_loader,loss_func,lr_scheduler,optimizer = nn_model(config)
+        train(model,train_loader,val_loader,loss_func,optimizer,lr_scheduler, config)
     return model
 
 def nn_model(config):
@@ -50,9 +50,9 @@ def nn_model(config):
     
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
-    #scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.2)
+    scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer=optimizer,base_lr=0.0001,max_lr=0.0000001)
 
-    return net,train_set_loader,val_set_loader,loss_function,optimizer
+    return net,train_set_loader,val_set_loader,loss_function,optimizer, scheduler
 
 
 def validation(nn_model,val_set_loader,loss_func,epoch,config):
@@ -89,15 +89,15 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         return val_loss
 
 
-def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
+def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, scheduler, config):
     wandb.watch(nn_model,loss_func,log='all',log_freq=10)
 
     mini_batches = 0
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        #scheduler.step()
-        #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
+        scheduler.step()
+        print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
             image = image.squeeze(1)
             #print(gt.shape)
