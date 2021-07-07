@@ -115,7 +115,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, schedule
             #print(output.shape)
             loss = loss_func(output, gt)    
             
-            optimizer.zero_grad()
+            #optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
