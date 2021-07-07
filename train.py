@@ -50,7 +50,7 @@ def nn_model(config):
     
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
-    scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer=optimizer,base_lr=0.0001,max_lr=0.0000001)
+    scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,gamma=0.7)
 
     return net,train_set_loader,val_set_loader,loss_function,optimizer, scheduler
 
