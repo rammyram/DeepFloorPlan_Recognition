@@ -65,7 +65,7 @@ class UNet(nn.Module):
             concat_skip = torch.cat((skip_connection,x),dim=1)
             x = self.ups[idx + 1](concat_skip)
         
-        x = self.sigmoid(self.final_conv(x))
+        x = self.final_conv(x)
         #print(x.shape)
         return x
    
