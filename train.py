@@ -138,7 +138,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
 
 
-            #print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
+            print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
 
 def training_log(loss,mini_batch,train=True):
     if train == True:
