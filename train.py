@@ -23,8 +23,8 @@ def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
         config = wandb.config
 
-        model,train_loader,val_loader,loss_func,lr_scheduler,optimizer = nn_model(config)
-        train(model,train_loader,val_loader,loss_func,optimizer,lr_scheduler, config)
+        model,train_loader,val_loader,loss_func,optimizer = nn_model(config)
+        train(model,train_loader,val_loader,loss_func,optimizer, config)
     return model
 
 def nn_model(config):
@@ -38,21 +38,21 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(n_classes=3)
+    net = UNet(n_classes=1)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
 
     
     #loss_function = torch.nn.BCEWithLogitsLoss()
-    #loss_function = torch.nn.BCELoss()
-    loss_function = torch.nn.CrossEntropyLoss()
+    loss_function = torch.nn.BCELoss()
+    #loss_function = torch.nn.CrossEntropyLoss()
     
     
     optimizer = torch.optim.Adam(net.parameters(),lr=config.lr)
-    scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,gamma=0.7)
+    #scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,gamma=0.7)
 
-    return net,train_set_loader,val_set_loader,loss_function,optimizer, scheduler
+    return net,train_set_loader,val_set_loader,loss_function,optimizer
 
 
 def validation(nn_model,val_set_loader,loss_func,epoch,config):
@@ -72,7 +72,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         else:
             image,gt = image, gt
 
-        gt = torch.argmax(gt,dim=1)
+        #gt = torch.argmax(gt,dim=1)
         output = nn_model(image)
         loss = loss_func(output, gt)
        
@@ -89,14 +89,14 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         return val_loss
 
 
-def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, scheduler, config):
+def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     wandb.watch(nn_model,loss_func,log='all',log_freq=10)
 
     mini_batches = 0
     train_loss = 0.0
     print("Training....")
     for epoch in range(config.epochs):
-        scheduler.step()
+        #scheduler.step()
         #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
             image = image.squeeze(1)
@@ -110,12 +110,12 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, schedule
             else:
                 image,gt = image, gt
             
-            gt = torch.argmax(gt,dim=1)
+            #gt = torch.argmax(gt,dim=1)
             output = nn_model(image)
-            #print(output.shape)
+            
             loss = loss_func(output, gt)    
             
-            #optimizer.zero_grad()
+            optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
