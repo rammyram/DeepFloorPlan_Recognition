@@ -39,9 +39,9 @@ class FloorPlanDataset(Dataset):
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg","")
 
-        image = Image.open(image_path).convert("RGB")
+        image = Image.open(image_path).convert("L")
         image = image.resize((600,600),Image.ANTIALIAS)
-        image = np.array(image,dtype=np.float32).transpose(2,0,1)
+        image = np.array(image,dtype=np.float32)#.transpose(2,0,1)
         
         gt = Image.open(gt_path).convert("RGB")
         gt = np.array(gt,dtype=np.float32)
