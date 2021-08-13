@@ -34,7 +34,7 @@ class FloorPlanDataset(Dataset):
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
         floor_plan_resized = np.transpose(floor_plan_resized,(2,1,0))
-        floor_plan = torch.Tensor(floor_plan_resized.copy(),dtype=torch.float32)
+        floor_plan = torch.Tensor([floor_plan_resized.copy()],dtype=torch.float32)
         
 
         gt = plt.imread(gt_path) 
