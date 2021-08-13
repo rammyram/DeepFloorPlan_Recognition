@@ -42,6 +42,6 @@ class FloorPlanDataset(Dataset):
             mask = np.all(gt == label["rgb_values"],axis=2)
             gt_labels[mask] = label["id"]
         
-        gt_labels = torch.from_numpy(gt_labels.copy())
+        gt_labels = torch.from_numpy(gt_labels)
  
         return floor_plan, gt
