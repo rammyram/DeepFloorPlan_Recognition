@@ -31,7 +31,7 @@ class FloorPlanDataset(Dataset):
 
         floor_plan = plt.imread(image_path)
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
-        floor_plan_resized /= floor_plan_resized.max()
+        floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
         floor_plan = torch.tensor([floor_plan_resized])
         
 
