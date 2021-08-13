@@ -8,8 +8,8 @@ import cv2
 SEG_LABELS_LIST = [
     {"id":-1,"name":"void","rgb_values":[0,0,0]},
     {"id":0,"name":"wall","rgb_values":[255,0,0]},
-    {"id":1,"name":"door","rgb_values":[0,255,0]}
-    #{"id":2,"name":"window","rgb_values":[0,0,255]}
+    {"id":1,"name":"door","rgb_values":[0,255,0]},
+    {"id":2,"name":"window","rgb_values":[0,0,255]}
 ]
 
 class FloorPlanDataset(Dataset):
@@ -36,7 +36,7 @@ class FloorPlanDataset(Dataset):
         
 
         gt = plt.imread(gt_path) 
-
+        gt = gt.copy()
         gt_labels = gt[...,0]
         for label in SEG_LABELS_LIST:
             mask = np.all(gt == label["rgb_values"],axis=2)
