@@ -32,7 +32,7 @@ class FloorPlanDataset(Dataset):
         floor_plan = plt.imread(image_path)
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
-        floor_plan = torch.tensor([floor_plan_resized])
+        floor_plan = torch.from_numpy(floor_plan_resized.copy())
         
 
         gt = plt.imread(gt_path) 
@@ -42,6 +42,6 @@ class FloorPlanDataset(Dataset):
             mask = np.all(gt == label["rgb_values"],axis=2)
             gt_labels[mask] = label["id"]
         
-        gt_labels = torch.from_numpy(gt_labels)
+        gt_labels = torch.from_numpy(gt_labels.copy())
  
         return floor_plan, gt
