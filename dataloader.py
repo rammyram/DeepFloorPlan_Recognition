@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from torch._C import dtype
 from torch.utils.data import Dataset
 import os
 import torch
@@ -33,7 +34,7 @@ class FloorPlanDataset(Dataset):
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
         floor_plan_resized = np.transpose(floor_plan_resized,(2,1,0))
-        floor_plan = torch.from_numpy(floor_plan_resized.copy())
+        floor_plan = torch.Tensor(floor_plan_resized.copy(),dtype=torch.float32)
         
 
         gt = plt.imread(gt_path) 
