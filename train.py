@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import configuration
-from dataloader import FloorPlanDataset,label_img_to_rgb
+from dataloader import FloorPlanDataset
 from unet import UNet
 from loss import CrossEntropyLoss
 from PIL import Image
