@@ -9,7 +9,7 @@ SEG_LABELS_LIST = [
     {"id":-1,"name":"void","rgb_values":[0,0,0]},
     {"id":0,"name":"wall","rgb_values":[255,0,0]},
     {"id":1,"name":"door","rgb_values":[0,255,0]},
-    {"id":2,"name":"window":,"rgb_values":[0,0,255]}
+    {"id":2,"name":"window":"rgb_values":[0,0,255]}
 ]
 
 class FloorPlanDataset(Dataset):
@@ -33,7 +33,8 @@ class FloorPlanDataset(Dataset):
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
         floor_plan_resized = cv2.cvtColor(floor_plan_resized,cv2.COLOR_BGR2GRAY)
         floor_plan = torch.tensor([floor_plan_resized])
-        
+        floor_plan /= floor_plan.max()
+
         gt = plt.imread(gt_path) 
 
         gt_labels = gt[...,0]
