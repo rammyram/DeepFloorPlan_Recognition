@@ -48,4 +48,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
+        print("Maximum of ground truth:",gt_labels.max())
         return floor_plan, gt_labels
