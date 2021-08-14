@@ -3,7 +3,7 @@ import torch
 class training_config():
     batch_size = 2
     number_epochs = 25
-    learning_rate = 0.000001
+    learning_rate = 0.0001
     number_workers = 2
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     plot_frequency = 5
