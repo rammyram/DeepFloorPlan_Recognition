@@ -10,11 +10,11 @@ class training_config():
 
 class train_data_config():
     training_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_train/"
-    train_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/train_no_seperation/"
+    train_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/ground_truth_data/"
     training_data_size = 40
 
 class validation_data_config():
     validation_set_dir = "/content/DeepFloorPlan_Recognition/Data/Images_val/"
-    validation_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/val_no_seperation/"
+    validation_ground_truth_dir = "/content/DeepFloorPlan_Recognition/Data/ground_truth_val/"
     validation_data_size = 10
 
