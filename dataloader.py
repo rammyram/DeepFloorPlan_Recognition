@@ -7,9 +7,9 @@ import torch
 import cv2
 
 SEG_LABELS_LIST = [
-    {"id":-1,"name":"void","rgb_values":[0,0,0]},
-    {"id":0,"name":"wall","rgb_values":[255,0,0]},
-    {"id":1,"name":"door","rgb_values":[0,255,0]}
+    {"id":0,"name":"void","rgb_values":[0,0,0]},
+    {"id":1,"name":"wall","rgb_values":[255,0,0]},
+    {"id":2,"name":"door","rgb_values":[0,255,0]}
     #{"id":2,"name":"window","rgb_values":[0,0,255]}
 ]
 
@@ -48,5 +48,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
-        print("Maximum of ground truth:",gt_labels.max())
+        
         return floor_plan, gt_labels
