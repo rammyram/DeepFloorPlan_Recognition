@@ -25,7 +25,7 @@ class FloorPlanDataset(Dataset):
     def __getitem__(self, index):
         image_path = os.path.join(self.image_dir,self.images[index])
         
-        
+        print(image_path)        
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg",".png")
 
@@ -50,5 +50,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
-        print(image_path)
+        
         return floor_plan, gt_labels
