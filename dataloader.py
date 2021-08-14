@@ -32,9 +32,8 @@ class FloorPlanDataset(Dataset):
         floor_plan = plt.imread(image_path)
         floor_plan_resized = cv2.resize(floor_plan,(256,256))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
-        #floor_plan_resized = np.transpose(floor_plan_resized,[2,1,0]).astype(np.float32)
-        floor_plan_resized = np.reshape(np.shape(floor_plan_resized)[2],np.shape(floor_plan_resized)[1],np.reshape(floor_plan_resized)[0])
-        floor_plan_resized = floor_plan_resized.astype(np.float32)
+        floor_plan_resized = np.transpose(floor_plan_resized,[2,1,0]).astype(np.float32)
+        print(np.shape(floor_plan_resized))
         floor_plan = torch.from_numpy(floor_plan_resized)
         
 
@@ -50,5 +49,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
-        print(floor_plan.shape)
+        
         return floor_plan, gt_labels
