@@ -47,5 +47,5 @@ class FloorPlanDataset(Dataset):
 
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
- 
-        return floor_plan, gt
+        
+        return floor_plan, gt_labels
