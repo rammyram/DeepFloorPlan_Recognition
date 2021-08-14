@@ -66,7 +66,7 @@ class UNet(nn.Module):
             x = self.ups[idx + 1](concat_skip)
         
         x = self.softmax(self.final_conv(x))
-        #print(x.shape)
+        print(x.max())
         return x
    
 
