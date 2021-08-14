@@ -99,8 +99,6 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 image,gt = image, gt
             
             output = nn_model(image)
-            print("Output shape:",output.shape)
-            print("Maximum of gt tensor:",gt.max())
             loss = loss_func(output, gt)    
             
             optimizer.zero_grad()
