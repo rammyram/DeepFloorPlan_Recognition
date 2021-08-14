@@ -14,10 +14,9 @@ SEG_LABELS_LIST = [
 ]
 
 class FloorPlanDataset(Dataset):
-    def __init__(self,image_dir,gt_dir,transform=False):
+    def __init__(self,image_dir,gt_dir):
         self.image_dir = image_dir
         self.gt_dir = gt_dir
-        self.transform = transform
         self.images = os.listdir(image_dir)
 
     def __len__(self):
@@ -48,5 +47,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
-        print(image_path)
+        #print(image_path)
         return floor_plan, gt_labels
