@@ -32,8 +32,9 @@ class FloorPlanDataset(Dataset):
         floor_plan = plt.imread(image_path)
         floor_plan_resized = cv2.resize(floor_plan,(256,256))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
-        floor_plan_resized = np.transpose(floor_plan_resized,[2,1,0]).astype(np.float32)
         print(np.shape(floor_plan_resized))
+        floor_plan_resized = np.transpose(floor_plan_resized,[2,1,0]).astype(np.float32)
+        #print(np.shape(floor_plan_resized))
         floor_plan = torch.from_numpy(floor_plan_resized)
         
 
