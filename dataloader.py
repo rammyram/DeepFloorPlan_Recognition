@@ -25,7 +25,7 @@ class FloorPlanDataset(Dataset):
     def __getitem__(self, index):
         image_path = os.path.join(self.image_dir,self.images[index])
         
-        print(image_path)        
+                
         gt_path = os.path.join(self.gt_dir,self.images[index])
         gt_path = gt_path.replace(".jpg",".png")
 
@@ -35,7 +35,7 @@ class FloorPlanDataset(Dataset):
         floor_plan_resized = cv2.cvtColor(floor_plan_resized,cv2.COLOR_BGR2RGB)
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
         floor_plan_resized = np.transpose(floor_plan_resized,[2,1,0]).astype(np.float32)
-        print(np.shape(floor_plan_resized))
+        
         floor_plan = torch.from_numpy(floor_plan_resized)
         
 
