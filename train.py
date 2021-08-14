@@ -38,7 +38,7 @@ def nn_model(config):
     val_set_loader = DataLoader(val_set,batch_size = configuration.training_config.batch_size,shuffle=False,num_workers=configuration.training_config.number_workers)
 
     #Build the model
-    net = UNet(n_classes=3)
+    net = UNet(n_classes=2)
 
     if configuration.training_config.device.type == 'cuda':
         net.cuda()
@@ -64,15 +64,11 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
     mini_batches = 0
 
     for batch_id,(image,gt) in enumerate(val_set_loader):
-        image = image.squeeze(1)
-        #gt = gt.squeeze(1)
-        
         if(configuration.training_config.device.type == 'cuda'):
             image,gt = image.cuda(), gt.cuda()
         else:
             image,gt = image, gt
 
-        #gt = torch.argmax(gt,dim=1)
         output = nn_model(image)
         loss = loss_func(output, gt)
        
@@ -83,9 +79,6 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
         
-        
-        #out1 = visualizer(output.cpu(),epoch,config)
-        #plt.imsave("Image_" + str(img_id[0]),out1)
         return val_loss
 
 
@@ -99,20 +92,13 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         #scheduler.step()
         #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
-            #image = image.squeeze(1)
-            print(gt.shape)
-            #gt = gt.squeeze(1)
-            
             nn_model.train()
-            
             if(configuration.training_config.device.type == 'cuda'):
                 image,gt = image.cuda(),gt.cuda()
             else:
                 image,gt = image, gt
             
-            #gt = torch.argmax(gt,dim=1)
             output = nn_model(image)
-            
             loss = loss_func(output, gt)    
             
             optimizer.zero_grad()
