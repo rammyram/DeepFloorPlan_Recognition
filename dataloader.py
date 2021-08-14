@@ -30,13 +30,14 @@ class FloorPlanDataset(Dataset):
         gt_path = gt_path.replace(".jpg",".png")
 
         floor_plan = plt.imread(image_path)
-        floor_plan_resized = cv2.resize(floor_plan,(600,600))
+        floor_plan_resized = cv2.resize(floor_plan,(256,256))
         floor_plan_resized = floor_plan_resized / floor_plan_resized.max()
         floor_plan_resized = np.transpose(floor_plan_resized,(2,1,0)).astype(np.float32)
         floor_plan = torch.from_numpy(floor_plan_resized)
         
 
         gt = plt.imread(gt_path) 
+        gt = cv2.resize(gt,(256,256))
         gt = gt.copy()
 
         gt_labels = gt[...,0]
@@ -47,5 +48,5 @@ class FloorPlanDataset(Dataset):
         #gt_labels = np.transpose(gt_labels,(2,1,0))        
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
-        #print(image_path)
+        
         return floor_plan, gt_labels
