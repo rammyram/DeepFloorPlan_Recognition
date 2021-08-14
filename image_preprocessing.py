@@ -97,14 +97,26 @@ def seperate_wall_images(source_dir,destination_dir):
     
     print("Completed traferring wall images into a seperate folder")
 
+def convert_images_to_rgb(source_dir):
+    path, dirs, files = next(os.walk(source_dir))
+    for i in tqdm(enumerate(files)):
+        image = plt.imread(source_dir + i[1])
+        image = cv2.resize(image, (256,256))
+        if(np.shape(image) == (256,256,3)):
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            cv2.imwrite("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Images/Images_val_new/" + i[1],image)
+        else:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+            cv2.imwrite("/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Images/Images_val_new/" + i[1],image)
+    
+    print("Successful")
 
-
-src_dir2 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_train/"
-src_dir1 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Walls/Wall_train/"
+#src_dir2 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/doors/doors_train/"
+src_dir1 = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Images/Images_val/"
 #destination_dir = "/home/aditya/Documents/HiWi/Work/R3D_doors and windows/Train/Walls/Close_wall/"
-merge_images(src_dir1,src_dir2)
+#merge_images(src_dir1,src_dir2)
 #dimension_check(src_dir1)
 #resize_images(src_dir2)
 #change_mask_color(src_dir1,destination_dir)
 #seperate_wall_images(src_dir1,destination_dir)
-
+convert_images_to_rgb(src_dir1)
