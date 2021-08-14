@@ -9,8 +9,8 @@ import cv2
 SEG_LABELS_LIST = [
     {"id":-1,"name":"void","rgb_values":[0,0,0]},
     {"id":0,"name":"wall","rgb_values":[255,0,0]},
-    {"id":1,"name":"door","rgb_values":[0,255,0]},
-    {"id":2,"name":"window","rgb_values":[0,0,255]}
+    {"id":1,"name":"door","rgb_values":[0,255,0]}
+    #{"id":2,"name":"window","rgb_values":[0,0,255]}
 ]
 
 class FloorPlanDataset(Dataset):
@@ -28,7 +28,7 @@ class FloorPlanDataset(Dataset):
         
         
         gt_path = os.path.join(self.gt_dir,self.images[index])
-        gt_path = gt_path.replace(".jpg","")
+        gt_path = gt_path.replace(".jpg",".png")
 
         floor_plan = plt.imread(image_path)
         floor_plan_resized = cv2.resize(floor_plan,(600,600))
