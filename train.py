@@ -1,8 +1,7 @@
-from numpy.core.defchararray import index
-from numpy.core.fromnumeric import shape
 import torch
 from torch._C import device, dtype
 from torch.nn.modules import loss
+from torchsummary.torchsummary import summary
 import torchvision
 import wandb
 from torchvision import transforms
@@ -14,8 +13,7 @@ import os
 import configuration
 from dataloader import FloorPlanDataset
 from unet import UNet
-from loss import CrossEntropyLoss
-from PIL import Image
+
 
 
 def evaluate_model(model, dataloader):
@@ -100,6 +98,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
     mini_batches = 0
     train_loss = 0.0
+    print("-----------------Network summary-------------------\n")
+    summary(nn_model.cuda(),(3,256,256))
     print("Training....")
     for epoch in range(config.epochs):
         #scheduler.step()
