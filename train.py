@@ -102,8 +102,6 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     summary(nn_model.cuda(),(3,256,256))
     print("Training....")
     for epoch in range(config.epochs):
-        #scheduler.step()
-        #print("\nLearning rate at this epoch is: %0.9f"%scheduler.get_lr()[0])
         for batch_id,(image,gt) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
@@ -124,19 +122,18 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             print("Epoch: " + str(epoch) + " : Mini Batch: " + str(mini_batches) + " Training loss: " + str(train_loss))
 
             #Plotting in wandb
-            if(mini_batches % configuration.training_config.plot_frequency == 0):
-                val_loss = validation(nn_model,val_set_loader,loss_func,epoch,config)
-                #training_log(val_loss,mini_batches)
-                #training_log(train_loss/mini_batches,mini_batches,False)
-                wandb.log({'train_loss':train_loss,'batch':mini_batches})
-                wandb.log({'val_loss':val_loss,'batch':mini_batches})
-                PATH = "model.pt"
-                torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
+            #if(mini_batches % configuration.training_config.plot_frequency == 0):
+            val_loss = validation(nn_model,val_set_loader,loss_func,epoch,config)
                 
-                train_loss = 0.0
+            wandb.log({'train_loss':train_loss,'batch':mini_batches})
+            wandb.log({'val_loss':val_loss,'batch':mini_batches})
+            PATH = "model.pt"
+            torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
+                
+            train_loss = 0.0
                 
             
-            print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
+            #print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
             print("Score:", evaluate_model(nn_model, val_set_loader))
 
 
