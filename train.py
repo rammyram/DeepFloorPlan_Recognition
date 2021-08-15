@@ -22,7 +22,7 @@ def evaluate_model(model, dataloader):
     test_scores = []
     model.eval()
     for inputs, targets in dataloader:
-        inputs, targets = inputs.to(device), targets.to(device)
+        inputs, targets = inputs.cuda(), targets.cuda()
 
         outputs = model.forward(inputs)
         _,preds = torch.max(outputs,1)
@@ -139,7 +139,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
             print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
             print("Score:", evaluate_model(nn_model, val_set_loader))
-            
+
 def training_log(loss,mini_batch,train=True):
     if train == True:
         wandb.log({'batch':mini_batch,'loss':loss})
