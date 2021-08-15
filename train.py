@@ -125,8 +125,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             #if(mini_batches % configuration.training_config.plot_frequency == 0):
             val_loss = validation(nn_model,val_set_loader,loss_func,epoch,config)
                 
-            wandb.log({'train_loss':train_loss,'batch':mini_batches})
-            wandb.log({'val_loss':val_loss,'batch':mini_batches})
+            wandb.log({'Train_Loss':train_loss,'batch':mini_batches})
+            wandb.log({'Val_Loss':val_loss,'batch':mini_batches})
+            
             PATH = "model.pt"
             torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
                 
@@ -134,8 +135,11 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 
             
             #print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
-            print("Score:", evaluate_model(nn_model, val_set_loader))
+            print("Training Accuracy:",evaluate_model(nn_model, train_set_loader))
+            print("Validation Accuracy:", evaluate_model(nn_model, val_set_loader))
 
+            wandb.log({'Train_Accuracy':evaluate_model(nn_model, train_set_loader),'batch':mini_batches})
+            wandb.log({'Val_Accuracy':evaluate_model(nn_model,val_set_loader),'batch':mini_batches})
 
 
 def visualizer(pred_image,epoch,config):
