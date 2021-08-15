@@ -18,6 +18,20 @@ from loss import CrossEntropyLoss
 from PIL import Image
 
 
+def evaluate_model(model, dataloader):
+    test_scores = []
+    model.eval()
+    for inputs, targets in dataloader:
+        inputs, targets = inputs.to(device), targets.to(device)
+
+        outputs = model.forward(inputs)
+        _,preds = torch.max(outputs,1)
+        targets_mask = targets >= 0
+        test_scores.append(np.mean((preds.cpu() == targets.cpu())[targets_mask].numpy()))
+
+        return np.mean(test_scores)
+
+
 
 def wandb_initializer(args):
     with wandb.init(project="Deepfloorplan_Recognition",config=args):
@@ -124,7 +138,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
 
             print('Epoch-{0} lr:{1:f}'.format(epoch,optimizer.param_groups[0]['lr']))
-
+            print("Score:", evaluate_model(nn_model, val_set_loader))
+            
 def training_log(loss,mini_batch,train=True):
     if train == True:
         wandb.log({'batch':mini_batch,'loss':loss})
