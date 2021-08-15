@@ -129,7 +129,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 #training_log(val_loss,mini_batches)
                 #training_log(train_loss/mini_batches,mini_batches,False)
                 wandb.log({'train_loss':train_loss/mini_batches,'batch':mini_batches})
-                wandb.log({'val_loss':val_loss,'batch':mini_batches})
+                wandb.log({'val_loss':val_loss/mini_batches,'batch':mini_batches})
                 PATH = "model.pt"
                 torch.save({'epoch':epoch,'model_state_dict':nn_model.state_dict(),'optimizer_state_dict':optimizer.state_dict(),'loss':train_loss},PATH)
                 
