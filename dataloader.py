@@ -8,7 +8,7 @@ import cv2
 
 SEG_LABELS_LIST = [
     {"id":0,"name":"void","rgb_values":[0,0,0]},
-    {"id":1,"name":"wall","rgb_values":[255,0,0]},
+    {"id":1,"name":"window","rgb_values":[255,0,0]},
     {"id":2,"name":"door","rgb_values":[0,255,0]}
     #{"id":2,"name":"window","rgb_values":[0,0,255]}
 ]
