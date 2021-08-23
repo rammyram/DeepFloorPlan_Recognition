@@ -92,7 +92,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         if(epoch == configuration.training_config.number_epochs - 1):
             for i in range(8):
                 print(img_path[i],i)
-                plt.imsave("/content/DeepFloorPlan_Recognition/" + str(i) + ".png",output[i])
+                plt.imsave("/content/DeepFloorPlan_Recognition/" + str(i) + ".png",output[i].cpu().detach().numpy())
         
         
         return val_loss
