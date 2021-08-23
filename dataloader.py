@@ -52,4 +52,4 @@ class FloorPlanDataset(Dataset):
         gt_labels = torch.from_numpy(gt_labels.copy())
         gt_labels = gt_labels.to(dtype=torch.long)
         
-        return floor_plan, gt_labels
+        return floor_plan, gt_labels, image_path
