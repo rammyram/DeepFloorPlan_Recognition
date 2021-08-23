@@ -74,12 +74,12 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
     val_loss = 0.0
     mini_batches = 0
 
-    for batch_id,(image,gt) in enumerate(val_set_loader):
+    for batch_id,(image,gt,img_path) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt = image.cuda(), gt.cuda()
+            image,gt,img_path = image.cuda(), gt.cuda(), img_path.cuda()
         else:
-            image,gt = image, gt
-
+            image,gt, img_path = image, gt, img_path
+        
         output = nn_model(image)
         loss = loss_func(output, gt)
        
@@ -87,7 +87,6 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         mini_batches += 1
         val_loss += float(loss)
 
-        #val_loss = val_loss/mini_batches
         print("Validation loss: ",val_loss)
         
         return val_loss
@@ -102,13 +101,13 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
     summary(nn_model.cuda(),(3,256,256))
     print("Training....")
     for epoch in range(config.epochs):
-        for batch_id,(image,gt) in enumerate(train_set_loader):
+        for batch_id,(image,gt,img_path) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt = image.cuda(),gt.cuda()
+                image,gt,img_path = image.cuda(),gt.cuda(), img_path.cuda()
             else:
-                image,gt = image, gt
-            print(batch_id)
+                image,gt, img_path = image, gt, img_path
+            print(img_path)
             output = nn_model(image)
             loss = loss_func(output, gt)    
             
