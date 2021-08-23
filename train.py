@@ -90,7 +90,7 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         print("Validation loss: ",val_loss)
 
         if(epoch == configuration.training_config.number_epochs):
-            os.mkdir("results/")
+            os.mkdir("/content/DeepFloorPlan_Recognition/results/")
             for i in range(8):
                 print(img_path[i],i)
                 visualizer(output[i],i)
@@ -148,5 +148,5 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
 
 
 def visualizer(output, image_id):
-    plt.imsave("results/" + image_id + ".png",output)
+    plt.imsave("/content/DeepFloorPlan_Recognition/results/" + image_id + ".png",output)
   
