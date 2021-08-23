@@ -89,7 +89,9 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
 
         print("Validation loss: ",val_loss)
 
-           
+        if(epoch == configuration.training_config.number_epochs):
+            for i in range(8):
+                visualizer(output[i],i)
         
         return val_loss
 
@@ -112,7 +114,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             
             output = nn_model(image)
             loss = loss_func(output, gt)    
-            print(output.shape)
+            
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
