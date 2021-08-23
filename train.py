@@ -76,9 +76,9 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
 
     for batch_id,(image,gt,img_path) in enumerate(val_set_loader):
         if(configuration.training_config.device.type == 'cuda'):
-            image,gt,img_path = image.cuda(), gt.cuda(), img_path.cuda()
+            image,gt = image, gt.cuda()
         else:
-            image,gt, img_path = image, gt, img_path
+            image,gt = image, gt
         
         output = nn_model(image)
         loss = loss_func(output, gt)
@@ -88,6 +88,8 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         val_loss += float(loss)
 
         print("Validation loss: ",val_loss)
+
+           
         
         return val_loss
 
@@ -107,10 +109,10 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 image,gt = image.cuda(),gt.cuda()
             else:
                 image,gt = image, gt
-            print(img_path)
+            
             output = nn_model(image)
             loss = loss_func(output, gt)    
-            
+            print(output.shape)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -140,8 +142,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             wandb.log({'Train_Accuracy':evaluate_model(nn_model, train_set_loader),'batch':mini_batches})
             wandb.log({'Val_Accuracy':evaluate_model(nn_model,val_set_loader),'batch':mini_batches})
 
-"""
-def visualizer(output):
+
+def visualizer(output, image_id):
     os.mkdir("results")
-    plt.imsave("results/" + )
-"""  
+    plt.imsave("results/" + image_id + ".png",output)
+  
