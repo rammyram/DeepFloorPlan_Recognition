@@ -19,7 +19,7 @@ from unet import UNet
 def evaluate_model(model, dataloader):
     test_scores = []
     model.eval()
-    for inputs, targets in dataloader:
+    for inputs, targets, img_path in dataloader:
         inputs, targets = inputs.cuda(), targets.cuda()
 
         outputs = model.forward(inputs)
