@@ -108,7 +108,7 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
                 image,gt = image.cuda(),gt.cuda()
             else:
                 image,gt = image, gt
-        
+            print(image)
             output = nn_model(image)
             loss = loss_func(output, gt)    
             
@@ -141,16 +141,8 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
             wandb.log({'Train_Accuracy':evaluate_model(nn_model, train_set_loader),'batch':mini_batches})
             wandb.log({'Val_Accuracy':evaluate_model(nn_model,val_set_loader),'batch':mini_batches})
 
-
-def visualizer(pred_image,epoch,config):
-    if (epoch == config.epochs - 1):
-        #class_labels = ['void','windows']
-        #class_labels_list = np.array([[0],[1]])
-
-        for i in range(2):
-            predicted_img = pred_image[i]
-            predicted_img[predicted_img > 0.5] = 1.0
-            predicted_img[predicted_img < 0.5] = 0.0
-
-        #print(pred_image.shape)
-        return predicted_img[0].cpu().detach().cpu()
+"""
+def visualizer(output):
+    os.mkdir("results")
+    plt.imsave("results/" + )
+"""  
