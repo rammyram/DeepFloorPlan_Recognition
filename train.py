@@ -104,9 +104,9 @@ def train(nn_model,train_set_loader,val_set_loader,loss_func,optimizer, config):
         for batch_id,(image,gt,img_path) in enumerate(train_set_loader):
             nn_model.train()
             if(configuration.training_config.device.type == 'cuda'):
-                image,gt,img_path = image.cuda(),gt.cuda(), img_path.cuda()
+                image,gt = image.cuda(),gt.cuda()
             else:
-                image,gt, img_path = image, gt, img_path
+                image,gt = image, gt
             print(img_path)
             output = nn_model(image)
             loss = loss_func(output, gt)    
