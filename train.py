@@ -87,13 +87,14 @@ def validation(nn_model,val_set_loader,loss_func,epoch,config):
         mini_batches += 1
         val_loss += float(loss)
 
+        print("Epoch:",epoch)
         print("Validation loss: ",val_loss)
-
         if(epoch == configuration.training_config.number_epochs):
             os.mkdir("/content/DeepFloorPlan_Recognition/results/")
             for i in range(8):
                 print(img_path[i],i)
                 visualizer(output[i],i)
+        
         
         return val_loss
 
